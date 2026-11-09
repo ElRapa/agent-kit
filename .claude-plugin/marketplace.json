@@ -1,0 +1,7 @@
+{
+  "name": "agent-kit",
+  "owner": { "name": "ElRapa" },
+  "plugins": [
+    { "name": "core", "source": "./", "description": "Review skills and the AI improvement loop" }
+  ]
+}
