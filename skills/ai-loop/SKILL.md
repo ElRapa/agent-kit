@@ -1,16 +1,16 @@
 ---
 name: ai-loop
-description: Review AI coding sessions for recurring work patterns, capabilities, friction, and evidence-backed improvement ideas. Use when asked to run an AI Loop, review OpenCode sessions, or reflect on an individual's or Strategy People's ways of working.
+description: Review AI coding sessions for recurring work patterns, capabilities, friction, and evidence-backed improvement ideas. Use when asked to run an AI Loop, review OpenCode sessions, or reflect on an individual's or a team's ways of working.
 ---
 
 # AI Loop
 
-Turn session history into reviewable learning. The purpose is to help an individual understand their work patterns and capabilities, then suggest improvements to their skills, tools, prompts, or workflow. Sessions may also offer useful signals for Strategy People (SP), but any organisation-wide interpretation is a separate, unproven hypothesis that requires explicit consent and clear boundaries.
+Turn session history into reviewable learning. The purpose is to help an individual understand their work patterns and capabilities, then suggest improvements to their skills, tools, prompts, or workflow. Sessions may also offer useful signals for your team, but any organisation-wide interpretation is a separate, unproven hypothesis that requires explicit consent and clear boundaries.
 
 ## Principles
 
 - Run only when explicitly requested; do not schedule scans or continuously monitor sessions.
-- Treat sessions as sensitive source material. Inspect only the requested person's sessions and scope; do not share raw transcripts or infer permission to conduct an SP-wide review from an individual review.
+- Treat sessions as sensitive source material. Inspect only the requested person's sessions and scope; do not share raw transcripts or infer permission to conduct a team-wide review from an individual review.
 - Prefer a bounded, representative sample over scanning everything. State the projects, time range, and session count reviewed; ask if the intended scope is unclear.
 - Base every finding on specific evidence from the reviewed sessions. Separate observed patterns from interpretations and recommendations; include counterexamples and uncertainty where relevant.
 - Do not make silent changes to skills, prompts, configuration, or working habits. Present proposed changes for review and wait for explicit approval before implementing them.
@@ -28,7 +28,7 @@ OpenCode's documented macOS/Linux application-data root is `~/.local/share/openc
 - Discover available sessions through `opencode session list` (optionally limit the list with `--max-count`). Use `opencode export <sessionID> --sanitize` when an export is needed; review the sanitized export and avoid retaining it longer than needed.
 - Do not delete sessions or modify OpenCode's session database.
 
-When the user asks to review sessions but does not specify scope, ask which project(s) and time range to review, and whether the review is individual-only. Do not assume consent to review other people's sessions or aggregate sessions across SP.
+When the user asks to review sessions but does not specify scope, ask which project(s) and time range to review, and whether the review is individual-only. Do not assume consent to review other people's sessions or aggregate sessions across a team.
 
 ## Review workflow
 
@@ -63,9 +63,9 @@ When the user asks to review sessions but does not specify scope, ask which proj
 ### Open questions
 - Missing context, counterexamples, or scope limitations.
 
-## Individual learning and SP
+## Individual learning and the team
 
-Sessions can help an individual reflect on their own working style and capabilities. This does not automatically authorize collection or analysis of colleagues' sessions. Any SP-level learning must be explicitly requested, appropriately consented, scoped, and designed to avoid identifying or evaluating individuals. Prefer voluntary, aggregated patterns with evidence limitations made clear; never present session-derived signals as objective performance scores.
+Sessions can help an individual reflect on their own working style and capabilities. This does not automatically authorize collection or analysis of colleagues' sessions. Any team-level learning must be explicitly requested, appropriately consented, scoped, and designed to avoid identifying or evaluating individuals. Prefer voluntary, aggregated patterns with evidence limitations made clear; never present session-derived signals as objective performance scores.
 
 ## References
 
