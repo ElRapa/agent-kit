@@ -1,0 +1,26 @@
+# Weekly: move the vendored third-party skills to upstream's latest commit and open a PR with the diff.
+# Third-party skills are prompts that agents follow, so a person reads the diff before it merges.
+# Needs repo setting: Actions > General > "Allow GitHub Actions to create and approve pull requests".
+name: vendor-update
+on:
+  schedule: [{ cron: "0 6 * * 1" }]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: python3 scripts/vendor.py --latest
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: vendor-update
+          title: "vendor: update third-party skills"
+          commit-message: "vendor: update third-party skills to upstream HEAD"
+          body: |
+            `scripts/vendor.py --latest` moved the pinned commits in `vendor.toml`.
+            Read the SKILL.md diffs before merging: they become instructions for every agent.

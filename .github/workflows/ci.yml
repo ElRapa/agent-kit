@@ -1,0 +1,16 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - name: vendored skills match vendor.toml
+        run: python3 scripts/vendor.py --check
+      - name: every skill has a name and a description
+        run: |
+          for f in skills/*/SKILL.md; do
+            grep -q '^name:' "$f" && grep -q '^description:' "$f" || { echo "missing frontmatter: $f"; exit 1; }
+          done
