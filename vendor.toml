@@ -1,5 +1,5 @@
 # Third-party skills copied into skills/ at a pinned commit.
-# Change a commit or the list, then run: python3 scripts/vendor.py
+# Change a commit or the list, then run: python3 scripts/vendor.py (also removes dropped skills)
 # Check that skills/ still matches: python3 scripts/vendor.py --check
 
 [[source]]
@@ -44,5 +44,6 @@ skills = [
 # by install.sh. --latest moves these commits too.
 [[direct]]
 repo = "tt-a1i/archify"
-commit = "e37848822238e3a61b12739185cdadd49843a620"
+commit = "44781293f38728baf04dbad33ce1a0cef8c39cca"
 skill = "archify"  # diagrams and one-page explainers as HTML; needs Node >= 18
+path = "archify"   # the skill's folder upstream; the update fails if it moves

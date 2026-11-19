@@ -1,5 +1,5 @@
-# Keep the skill library current without a person: once a day, in the background, pull agent-kit
-# and reinstall the skills if anything changed. Updates reach main only through the gated weekly
+# Keep the skill library current without a person: once a day, in the background, fast-forward
+# agent-kit's main to origin/main (only when main is checked out) and reinstall the skills if anything changed. Updates reach main only through the gated weekly
 # vendor-update PR. Log: ~/.cache/agent-kit/update.log. Off: export AGENT_KIT_AUTO_UPDATE=0.
 () {
   local kit="${AGENT_KIT:-$HOME/code/agent-kit}" cache="$HOME/.cache/agent-kit"
@@ -9,8 +9,10 @@
   [[ -f "$stamp" && -n "$(find "$stamp" -mtime -1 2>/dev/null)" ]] && return 0
   touch "$stamp"
   (
+    # Only main, which changes only through reviewed or gated PRs; a checked-out work branch is left alone.
+    [[ "$(git -C "$kit" symbolic-ref --short -q HEAD)" == main ]] || exit 0
     before="$(git -C "$kit" rev-parse HEAD)"
-    git -C "$kit" pull --ff-only -q 2>&1 || exit 0
+    git -C "$kit" fetch -q origin main 2>&1 && git -C "$kit" merge --ff-only -q origin/main 2>&1 || exit 0
     [[ "$(git -C "$kit" rev-parse HEAD)" == "$before" ]] && exit 0
     echo "$(date '+%F %T') $before -> $(git -C "$kit" rev-parse --short HEAD)"
     git -C "$kit" log --format='  %s' "$before..HEAD"

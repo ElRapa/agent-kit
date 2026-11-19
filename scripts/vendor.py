@@ -51,8 +51,11 @@ def same(a: Path, b: Path) -> bool:
 
 RISKY = {
     "download piped to a shell": r"(curl|wget)[^\n|]*\|\s*(ba|z)?sh",
-    "decode and run": r"base64\s+(-d|--decode)|eval\s*\(|exec\s*\(",
-    "instruction override": r"(?i)ignore (all |any )?(previous|prior|above|earlier) (instructions|rules)",
+    "decode and run": r"base64\s+(-d|--decode)|\beval\s*\(|\bexec\s*\(",
+    # Heuristics only; the Claude review (gate 2) backs them up.
+    "instruction override": r"(?i)\b(ignore|disregard|forget|override|bypass)\b[^\n]{0,40}\b(instructions?|rules|guidelines|system prompt|guardrails|AGENTS\.md|CLAUDE\.md)\b",
+    "new system prompt": r"(?i)(new|updated|real|true) system prompt|you are no longer|from now on,? you (must|will)",
+    "addresses the reviewer": r"(?i)review\.json|pre-?approved|auto-?approv|\b(reviewer|verdict)\b[^\n]{0,40}\b(pass|approved?|merge|safe)\b",
     "secret access": r"(?i)(\.ssh/|id_rsa|keychain|find-generic-password|\.aws/credentials|\.netrc)",
     "token variable": r"\b[A-Z_]*(TOKEN|API_KEY|SECRET)[A-Z_]*\b",
     "sending data out": r"(?i)(curl|wget|fetch|http)[^\n]*(-d |--data|POST|upload)",
@@ -101,9 +104,11 @@ def direct_diff() -> None:
             subprocess.run([*git, "fetch", "-q", "--depth", "1", url, old[d["skill"]]], check=True)
             out.append(f"### {d['repo']} {old[d['skill']][:7]}..{d['commit'][:7]} ({d['skill']})\n")
             out.append(subprocess.run(
-                [*git, "diff", old[d["skill"]], d["commit"], "--", d.get("path", d["skill"])],
+                [*git, "diff", old[d["skill"]], d["commit"], "--", d["path"]],
                 check=True, capture_output=True, text=True,
             ).stdout)
+            if not (repo / d["path"] / "SKILL.md").exists():
+                sys.exit(f"{d['repo']}: {d['path']}/SKILL.md is gone at {d['commit'][:7]}; set path in vendor.toml")
     DIRECT_DIFF.write_text("".join(out))
 
 
@@ -155,6 +160,15 @@ def main() -> int:
                     shutil.copytree(fresh, target)
     for name in drift:
         print(f"{'differs' if check else 'updated'}: skills/{name}")
+    # A vendored skill (it has UPSTREAM) that vendor.toml no longer lists is stale.
+    listed = {Path(path).name for source in sources for path in source["skills"]}
+    for up in sorted(SKILLS.glob("*/UPSTREAM")):
+        if up.parent.name in listed:
+            continue
+        drift.append(up.parent.name)
+        print(f"{'not in vendor.toml' if check else 'removed'}: skills/{up.parent.name}")
+        if not check:
+            shutil.rmtree(up.parent)
     return 1 if check and drift else 0
 
 

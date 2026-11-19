@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with: { persist-credentials: false }   # keep GITHUB_TOKEN out of .git/config, where the reviewer reads
       - uses: actions/setup-python@v5
         with: { python-version: "3.13" }
       - name: Move pins to upstream HEAD
@@ -49,7 +50,19 @@ jobs:
           claude -p "$(cat .github/prompts/vendor-review.md)" --model "$MODEL" --max-turns 60 \
             --permission-mode acceptEdits \
             --allowedTools "Read,Glob,Grep,Write(review.json),Bash(git diff:*),Bash(git status:*)" || true
-          verdict="$(python3 -c "import json;print(json.load(open('review.json'))['verdict'])" 2>/dev/null || echo hold)"
+          # pass only with evidence for every changed file (and for .direct.diff when it has content)
+          verdict="$(python3 - <<'PY' 2>/dev/null || echo hold
+          import json, os, subprocess
+          r = json.load(open("review.json"))
+          out = subprocess.run(["git", "status", "--porcelain", "-uall", "--", "skills", "vendor.toml"],
+                               capture_output=True, text=True, check=True).stdout
+          changed = {line[3:].strip() for line in out.splitlines()}
+          if os.path.exists(".direct.diff") and open(".direct.diff").read().strip():
+              changed.add(".direct.diff")
+          ok = r.get("verdict") == "pass" and changed <= set(r.get("evidence", {}))
+          print("pass" if ok else "hold")
+          PY
+          )"
           echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
           mv review.json "$RUNNER_TEMP/review.json" 2>/dev/null || echo '{"summary":"no review written","concerns":["review step failed"]}' > "$RUNNER_TEMP/review.json"
       - name: Check skills/ matches vendor.toml
