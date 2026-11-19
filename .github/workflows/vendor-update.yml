@@ -46,17 +46,22 @@ jobs:
           MODEL: ${{ vars.REVIEW_MODEL || 'claude-sonnet-5-5' }}
         run: |
           npm install -g @anthropic-ai/claude-code
-          mkdir -p "$RUNNER_TEMP/claude-home"
+          mkdir -p "$RUNNER_TEMP/claude-home" .review
+          # The reviewer gets its inputs as files and no shell at all.
+          git status --porcelain -uall -- skills vendor.toml > .review/status.txt
+          git diff HEAD -- skills vendor.toml > .review/diff.txt
           # Minimal environment: only the one credential Claude Code needs, no GitHub token, no other
           # secrets. dontAsk refuses every tool not listed; Read is limited to the checkout.
           env -i PATH="$PATH" HOME="$RUNNER_TEMP/claude-home" CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" \
             claude -p "$(cat .github/prompts/vendor-review.md)" --model "$MODEL" --max-turns 60 \
             --permission-mode dontAsk \
-            --allowedTools "Read(./**),Glob(./**),Grep(./**),Write(./review.json),Bash(git diff:*),Bash(git status:*)" \
+            --allowedTools "Read(./**),Glob(./**),Grep(./**),Write(./review.json)" \
             > /dev/null || true
           # pass only with evidence for every changed file (and for .direct.diff when it has content)
-          verdict="$(python3 - <<'PY' 2>/dev/null || echo hold
+          verdict="$(python3 - <<'PY' || echo hold
           import json, os, subprocess
+          if not os.path.exists("review.json"):
+              raise SystemExit("review.json missing: the reviewer wrote nothing (check the Write rule)")
           r = json.load(open("review.json"))
           out = subprocess.run(["git", "status", "--porcelain", "-uall", "--", "skills", "vendor.toml"],
                                capture_output=True, text=True, check=True).stdout
@@ -72,7 +77,7 @@ jobs:
       - name: Only skills/ and vendor.toml changed
         if: steps.bump.outputs.changed == '1'
         run: |
-          rm -f .direct.diff
+          rm -rf .direct.diff .review
           other="$(git status --porcelain -uall | awk '{print $2}' | grep -v -e '^skills/' -e '^vendor.toml$' || true)"
           if [ -n "$other" ]; then echo "unexpected changes: $other"; exit 1; fi
       - name: Check skills/ matches vendor.toml

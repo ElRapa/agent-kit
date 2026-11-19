@@ -1,7 +1,8 @@
 You review an update to third-party agent skills before it merges into agent-kit. Nobody else reads
 it: if you pass it, it merges and every coding agent on the owner's machines follows the new text.
 
-The change is in the working tree: run `git diff HEAD -- vendor.toml skills` and `git status --short`.
+The change is in the working tree. `.review/status.txt` lists the changed paths (`git status`) and
+`.review/diff.txt` holds their diff. You have no shell; read files directly.
 Packs installed straight from upstream ([[direct]] in vendor.toml) are not in that diff: their
 upstream diff is in `.direct.diff`. Skills are prompts (SKILL.md) plus helper files. Read every
 changed file.
@@ -22,7 +23,7 @@ Ordinary wording, examples, bug fixes and new rules within the skill's purpose p
 
 Write your answer to the file `review.json` and nothing else, in this shape:
 {"verdict": "pass" or "hold",
- "evidence": {"<each path git status lists>": "a quoted added or removed line that shows what changed",
+ "evidence": {"<each path in .review/status.txt>": "a quoted added or removed line that shows what changed",
               ".direct.diff": "a quoted line from it (only when .direct.diff is not empty)"},
  "concerns": ["one line per reason to hold, with file and the quoted line"]}
 A pass without an evidence entry for every changed path, and for `.direct.diff` when it has content,

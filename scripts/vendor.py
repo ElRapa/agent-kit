@@ -72,14 +72,21 @@ RISKY = {
 
 
 def added_lines(diff: str) -> list[str]:
-    """Added content lines of a unified diff. `+++` is a file header only right after a `---` line."""
-    out, prev = [], ""
+    """Added content lines of a unified diff.
+
+    `---`/`+++` are file headers only between a `diff --git` line and that file's first `@@`;
+    after an `@@`, every `+` line is content, whatever it starts with.
+    """
+    out, in_header = [], False
     for line in diff.splitlines():
-        if line.startswith("+++ ") and prev.startswith("--- "):
-            pass
-        elif line.startswith("+"):
+        if line.startswith("diff --git "):
+            in_header = True
+        elif line.startswith("@@"):
+            in_header = False
+        elif in_header and line.startswith(("--- ", "+++ ")):
+            continue
+        elif not in_header and line.startswith("+"):
             out.append(line[1:])
-        prev = line
     return out
 
 
