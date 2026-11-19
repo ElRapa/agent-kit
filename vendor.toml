@@ -1,0 +1,53 @@
+# Third-party skills copied into skills/ at a pinned commit.
+# Change a commit or the list, then run: python3 scripts/vendor.py (also removes dropped skills)
+# Check that skills/ still matches: python3 scripts/vendor.py --check
+# The only change made to a copy: allow_model_invocation drops `disable-model-invocation` for the
+# listed skills, so agents can start them (thermo-nuclear stays manual on purpose).
+
+[[source]]
+repo = "DietrichGebert/ponytail"
+commit = "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846"
+license = "LICENSE"
+skills = [
+  "skills/ponytail",        # default coding style: smallest complete change
+  "skills/ponytail-review", # main review: bug, risk, scale, tests, speed, lean
+  "skills/ponytail-audit",  # whole-repo review, ranked
+]
+
+[[source]]
+repo = "cursor/plugins"
+commit = "35a90942a7f02e1ebbc2443643179815f2147954"
+license = "cursor-team-kit/LICENSE"
+skills = [
+  "cursor-team-kit/skills/thermo-nuclear-code-quality-review", # harsh structure review, manual only
+  "cursor-team-kit/skills/verify-this",                        # prove a claim before/after
+]
+
+[[source]]
+repo = "cursor/plugins"
+commit = "35a90942a7f02e1ebbc2443643179815f2147954"
+license = "pstack/LICENSE"
+skills = [
+  "pstack/skills/blast-radius", # what a change breaks outside the diff
+  "pstack/skills/unslop",       # cut AI tells from prose
+]
+allow_model_invocation = ["blast-radius", "unslop"]  # AGENTS.md routes to them
+
+[[source]]
+repo = "mattpocock/skills"
+commit = "5863806dd4e15c63174bee4e7515a4256792ecfa"
+license = "LICENSE"
+skills = [
+  "skills/engineering/diagnosing-bugs", # hard bugs: build a pass/fail loop first
+  "skills/productivity/grilling",       # stress-test a plan, on request
+  "skills/productivity/handoff",        # hand a session to the next agent
+]
+allow_model_invocation = ["handoff"]
+
+# Too big to copy (18 MB, its own Node CLI): installed straight from upstream at the pinned commit
+# by install.sh. --latest moves these commits too.
+[[direct]]
+repo = "tt-a1i/archify"
+commit = "44781293f38728baf04dbad33ce1a0cef8c39cca"
+skill = "archify"  # diagrams and one-page explainers as HTML; needs Node >= 18
+path = "archify"   # the skill's folder upstream; the update fails if it moves

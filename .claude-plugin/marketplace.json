@@ -2,6 +2,6 @@
   "name": "agent-kit",
   "owner": { "name": "ElRapa" },
   "plugins": [
-    { "name": "core", "source": "./", "description": "Review skills and the AI improvement loop" }
+    { "name": "core", "source": "./", "description": "Coding style, review, debugging, idea, data and AI skills" }
   ]
 }

@@ -45,6 +45,14 @@ When the user asks to review sessions but does not specify scope, ask which proj
 6. Ask which suggestions the user wants to adopt. Make no edits until the user explicitly approves the specific change and its target.
 7. If an approved change is to an OpenCode skill or config, inspect the exact target first, preserve unrelated content, make only the approved change, then reread and verify it. Remind the user to restart OpenCode for config-time changes to load.
 
+## Skill use
+
+Skills nobody uses are dead code. In the reviewed sessions, count for each installed global skill
+(`~/.agents/skills/*`) how often it ran, and note sessions where a skill fit but none ran. Propose:
+removing a skill unused for 60 days, sharpening the description of one that should have triggered,
+and a new skill only for a task that recurred three or more times. Claude Code sessions show a skill
+as a `Skill` tool call; in other harnesses, look for the skill's name in the agent's messages.
+
 ## Reporting format
 
 ### Scope reviewed
