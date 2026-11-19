@@ -15,6 +15,15 @@ Rules for every project and every harness. Projects add their own AGENTS.md on t
 Code is written the **ponytail** way (level full) unless the project says otherwise. Prose (docs, PR
 text, commit messages) goes through **unslop**. Then pick by situation; a project's own skills win.
 
+Pick skills yourself; the owner does not name them. When you use one, say so in one line with the
+reason ("Using data-pipeline-review: this job appends without a key"), so the owner learns them by
+use. When the owner asks which skill fits, or seems not to know one exists, use **kit-help**.
+
+[archify explainer: proactive] A plan, comparison, decision, diagnosis or review that needs a table,
+steps or several sections also gets a one-page **archify** explainer; a system or flow to understand
+gets an archify diagram. Short answers stay in chat. Give a link the owner can open: a file path on
+this machine, or a Tailscale link when the owner is elsewhere.
+
 | Situation | Skills, in order |
 |---|---|
 | Rough idea, side project, customer ask without a spec | idea-to-mvp (grilling only when asked to stress-test) |
@@ -25,8 +34,10 @@ text, commit messages) goes through **unslop**. Then pick by situation; a projec
 | Whole repo health | ponytail-audit |
 | Pipeline, dbt, SQL, ingestion | data-pipeline-review (with ponytail-review) |
 | LLM feature, prompt, agent, RAG | ai-feature-review |
+| Explain a system, flow, schema or plan to a person | archify (diagram or one-page explainer) |
 | Session ends, work continues elsewhere | handoff |
-| Reflect on how I work with agents | ai-loop |
+| Reflect on how I work with agents, unused skills | ai-loop |
+| Which skill fits? | kit-help |
 
 A skill that names another skill that is not installed (for example `arena`): use **council** for
 multi-model work and skip the rest.

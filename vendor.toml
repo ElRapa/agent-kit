@@ -39,3 +39,10 @@ skills = [
   "skills/productivity/grilling",       # stress-test a plan, on request
   "skills/productivity/handoff",        # hand a session to the next agent
 ]
+
+# Too big to copy (18 MB, its own Node CLI): installed straight from upstream at the pinned commit
+# by install.sh. --latest moves these commits too.
+[[direct]]
+repo = "tt-a1i/archify"
+commit = "e37848822238e3a61b12739185cdadd49843a620"
+skill = "archify"  # diagrams and one-page explainers as HTML; needs Node >= 18
