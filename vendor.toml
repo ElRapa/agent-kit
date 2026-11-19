@@ -1,6 +1,8 @@
 # Third-party skills copied into skills/ at a pinned commit.
 # Change a commit or the list, then run: python3 scripts/vendor.py (also removes dropped skills)
 # Check that skills/ still matches: python3 scripts/vendor.py --check
+# The only change made to a copy: allow_model_invocation drops `disable-model-invocation` for the
+# listed skills, so agents can start them (thermo-nuclear stays manual on purpose).
 
 [[source]]
 repo = "DietrichGebert/ponytail"
@@ -29,6 +31,7 @@ skills = [
   "pstack/skills/blast-radius", # what a change breaks outside the diff
   "pstack/skills/unslop",       # cut AI tells from prose
 ]
+allow_model_invocation = ["blast-radius", "unslop"]  # AGENTS.md routes to them
 
 [[source]]
 repo = "mattpocock/skills"
@@ -39,6 +42,7 @@ skills = [
   "skills/productivity/grilling",       # stress-test a plan, on request
   "skills/productivity/handoff",        # hand a session to the next agent
 ]
+allow_model_invocation = ["handoff"]
 
 # Too big to copy (18 MB, its own Node CLI): installed straight from upstream at the pinned commit
 # by install.sh. --latest moves these commits too.

@@ -77,19 +77,25 @@ Skills from other repos are copied into `skills/` at a pinned commit, with their
 pinned commit. They are prompts every agent follows, so every update passes two automatic gates.
 
 - `vendor.toml` lists repo, commit and skill folders. Don't edit vendored folders; change the list.
+  The one change the script makes: `allow_model_invocation` drops `disable-model-invocation` from the
+  named skills (blast-radius, unslop, handoff), because AGENTS.md has agents start them on their own.
+  The skill's `UPSTREAM` file says so.
 - `python3 scripts/vendor.py` copies them and removes vendored skills no longer listed; `--check`
   fails when `skills/` drifted or holds such a stale skill (CI runs it);
   `--latest` moves every commit to upstream HEAD.
 - Weekly, `.github/workflows/vendor-update.yml` runs `--latest`, then two gates: `--scan` (heuristic
   patterns such as piping a download to a shell, reading keys, overriding instructions, text aimed at
   the reviewer, hooks) and a Claude review of the diff (`.github/prompts/vendor-review.md`) that
-  treats the files as data and must quote evidence for every changed file. A `[[direct]]` pack whose
+  treats the files as data and must quote evidence for every changed file. The review runs with only
+  its own credential, may read only the checkout and write only `review.json`, and its text is never
+  published: the PR shows the pins, the changed files, the scan output and pass or hold. The job fails
+  if anything outside `skills/` and `vendor.toml` changed. A `[[direct]]` pack whose
   `path` disappears upstream fails the run instead of passing with an empty diff. Both pass: the PR merges by itself and the
-  machines pick it up the next day. Either fails: the PR stays open with the label `hold` and the
+  machines pick it up the next day. Protect `main` on GitHub (changes only through PRs), because the
+  daily auto-update trusts whatever is on `origin/main`. Either fails: the PR stays open with the label `hold` and the
   reasons; that is the only time you need to look. Needs the secret `CLAUDE_CODE_OAUTH_TOKEN`.
 - Known exception: `diagnosing-bugs/scripts/hitl-loop.template.sh` uses a `localhost` URL as an
-  example. It is a template for a loop on your own machine, so the Tailscale rule in AGENTS.md does
-  not apply; vendored files stay unedited.
+  example. AGENTS.md treats a `localhost` in a template as a placeholder, not a link.
 - New pack: add a `[[source]]` block with only the skills worth having, run the script, add a row
   above and a line in the AGENTS.md table.
 

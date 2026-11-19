@@ -34,8 +34,15 @@ def fetch(repo: str, commit: str, dest: Path) -> None:
 def build(src: Path, path: str, source: dict, out: Path) -> None:
     shutil.copytree(src / path, out)
     shutil.copy(src / source["license"], out / "LICENSE")
+    note = ""
+    if out.name in source.get("allow_model_invocation", []):
+        # The one change vendor.py makes: agents may start this skill on their own (AGENTS.md routes to it).
+        skill = out / "SKILL.md"
+        lines = skill.read_text().splitlines(keepends=True)
+        skill.write_text("".join(x for x in lines if not x.startswith("disable-model-invocation:")))
+        note = "Changed: removed disable-model-invocation (vendor.toml allow_model_invocation).\n"
     (out / "UPSTREAM").write_text(
-        f"repo: https://github.com/{source['repo']}\ncommit: {source['commit']}\npath: {path}\n"
+        f"repo: https://github.com/{source['repo']}\ncommit: {source['commit']}\npath: {path}\n{note}"
         "Vendored by scripts/vendor.py. Do not edit here; change vendor.toml instead.\n"
     )
 
@@ -64,24 +71,37 @@ RISKY = {
 }
 
 
+def added_lines(diff: str) -> list[str]:
+    """Added content lines of a unified diff. `+++` is a file header only right after a `---` line."""
+    out, prev = [], ""
+    for line in diff.splitlines():
+        if line.startswith("+++ ") and prev.startswith("--- "):
+            pass
+        elif line.startswith("+"):
+            out.append(line[1:])
+        prev = line
+    return out
+
+
 def scan() -> int:
-    diff = subprocess.run(
-        ["git", "-C", str(ROOT), "diff", "-U0", "HEAD", "--", "skills", "vendor.toml"],
-        check=True, capture_output=True, text=True,
-    ).stdout
+    git = ["git", "-C", str(ROOT)]
+    paths = ["--", "skills", "vendor.toml"]
+    diff = subprocess.run([*git, "diff", "-U0", "HEAD", *paths], check=True, capture_output=True, text=True).stdout
+    numstat = subprocess.run([*git, "diff", "--numstat", "HEAD", *paths], check=True, capture_output=True, text=True).stdout
     new_files = subprocess.run(
-        ["git", "-C", str(ROOT), "ls-files", "--others", "--exclude-standard", "skills"],
-        check=True, capture_output=True, text=True,
+        [*git, "ls-files", "--others", "--exclude-standard", "skills"], check=True, capture_output=True, text=True
     ).stdout.split()
     if DIRECT_DIFF.exists():
         diff += DIRECT_DIFF.read_text()
-    added = [line[1:] for line in diff.splitlines() if line.startswith("+") and not line.startswith("+++")]
+    added = added_lines(diff)
+    # Binary changes have no text to scan, so they always need a person.
+    hits = [("binary file changed", row.split("\t")[-1]) for row in numstat.splitlines() if row.startswith("-\t-\t")]
     for f in new_files:
         try:
             added += (ROOT / f).read_text().splitlines()
         except UnicodeDecodeError:
-            print(f"binary file added: {f}")
-    hits = [(why, line.strip()[:160]) for line in added for why, rx in RISKY.items() if re.search(rx, line)]
+            hits.append(("binary file added", f))
+    hits += [(why, line.strip()[:160]) for line in added for why, rx in RISKY.items() if re.search(rx, line)]
     for why, line in hits:
         print(f"{why}: {line}")
     return 1 if hits else 0

@@ -3,8 +3,8 @@
 # (.github/prompts/vendor-review.md). If either gate fails, the PR stays open with the label "hold"
 # and the reasons in its description; that open PR is the only time the owner hears about it.
 #
-# Needs: secret CLAUDE_CODE_OAUTH_TOKEN (`claude setup-token`, uses the Pro/Max subscription) or
-# ANTHROPIC_API_KEY, and repo setting Actions > General > "Allow GitHub Actions to create and approve
+# Needs: secret CLAUDE_CODE_OAUTH_TOKEN (`claude setup-token`, uses the Pro/Max subscription), and
+# repo setting Actions > General > "Allow GitHub Actions to create and approve
 # pull requests". Optional repository variable REVIEW_MODEL (default claude-sonnet-5-5).
 name: vendor-update
 on:
@@ -42,14 +42,18 @@ jobs:
         id: review
         if: steps.bump.outputs.changed == '1'
         env:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           MODEL: ${{ vars.REVIEW_MODEL || 'claude-sonnet-5-5' }}
         run: |
           npm install -g @anthropic-ai/claude-code
-          claude -p "$(cat .github/prompts/vendor-review.md)" --model "$MODEL" --max-turns 60 \
-            --permission-mode acceptEdits \
-            --allowedTools "Read,Glob,Grep,Write(review.json),Bash(git diff:*),Bash(git status:*)" || true
+          mkdir -p "$RUNNER_TEMP/claude-home"
+          # Minimal environment: only the one credential Claude Code needs, no GitHub token, no other
+          # secrets. dontAsk refuses every tool not listed; Read is limited to the checkout.
+          env -i PATH="$PATH" HOME="$RUNNER_TEMP/claude-home" CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" \
+            claude -p "$(cat .github/prompts/vendor-review.md)" --model "$MODEL" --max-turns 60 \
+            --permission-mode dontAsk \
+            --allowedTools "Read(./**),Glob(./**),Grep(./**),Write(./review.json),Bash(git diff:*),Bash(git status:*)" \
+            > /dev/null || true
           # pass only with evidence for every changed file (and for .direct.diff when it has content)
           verdict="$(python3 - <<'PY' 2>/dev/null || echo hold
           import json, os, subprocess
@@ -64,25 +68,38 @@ jobs:
           PY
           )"
           echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
-          mv review.json "$RUNNER_TEMP/review.json" 2>/dev/null || echo '{"summary":"no review written","concerns":["review step failed"]}' > "$RUNNER_TEMP/review.json"
+          rm -f review.json   # free text from the model is not published anywhere
+      - name: Only skills/ and vendor.toml changed
+        if: steps.bump.outputs.changed == '1'
+        run: |
+          rm -f .direct.diff
+          other="$(git status --porcelain -uall | awk '{print $2}' | grep -v -e '^skills/' -e '^vendor.toml$' || true)"
+          if [ -n "$other" ]; then echo "unexpected changes: $other"; exit 1; fi
       - name: Check skills/ matches vendor.toml
         if: steps.bump.outputs.changed == '1'
         run: python3 scripts/vendor.py --check
       - name: Write PR body
+        id: body
         if: steps.bump.outputs.changed == '1'
+        env:
+          HELD: ${{ (steps.scan.outputs.ok == '1' && steps.review.outputs.verdict == 'pass') && '0' || '1' }}
         run: |
-          python3 - "$RUNNER_TEMP" <<'PY' > "$RUNNER_TEMP/body.md"
-          import json, sys, pathlib
-          t = pathlib.Path(sys.argv[1]); r = json.loads((t / "review.json").read_text())
-          print("Weekly update of third-party skills (by: vendor-update).\n")
-          print(r.get("summary", "") + "\n")
-          print("Pins moved:\n```\n" + (t / "bump.txt").read_text() + "```")
-          scan = (t / "scan.txt").read_text().strip()
-          if scan or r.get("concerns"):
-              print("\n**Held for a person.** Reasons:")
-              for line in scan.splitlines() + r.get("concerns", []):
-                  print(f"- {line}")
-          PY
+          {
+            echo "Weekly update of third-party skills (by: vendor-update)."
+            echo
+            echo "Pins moved:"
+            echo '```'; cat "$RUNNER_TEMP/bump.txt"; echo '```'
+            echo "Changed files:"
+            git status --porcelain -uall -- skills vendor.toml | sed 's/^/- /'
+            if [ "$HELD" = 1 ]; then
+              echo
+              echo "**Held for a person** (label hold). Scan: $([ '${{ steps.scan.outputs.ok }}' = 1 ] && echo passed || echo failed). Review: ${{ steps.review.outputs.verdict }}."
+              sed 's/^/- /' "$RUNNER_TEMP/scan.txt"
+            else
+              echo
+              echo "Both gates passed; merged automatically."
+            fi
+          } > "$RUNNER_TEMP/body.md"
       - name: Open PR
         id: pr
         if: steps.bump.outputs.changed == '1'
@@ -93,6 +110,9 @@ jobs:
           commit-message: "vendor: update third-party skills to upstream HEAD"
           title: "vendor: update third-party skills"
           body-path: ${{ runner.temp }}/body.md
+          add-paths: |
+            skills/**
+            vendor.toml
           labels: ${{ (steps.scan.outputs.ok == '1' && steps.review.outputs.verdict == 'pass') && 'vendor' || 'vendor,hold' }}
       # Both gates passed: merge now. PRs opened with GITHUB_TOKEN start no other workflows, and the
       # checks CI would run (--check) ran above.

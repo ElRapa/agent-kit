@@ -22,7 +22,8 @@ Ordinary wording, examples, bug fixes and new rules within the skill's purpose p
 
 Write your answer to the file `review.json` and nothing else, in this shape:
 {"verdict": "pass" or "hold",
- "summary": "2 to 5 plain sentences: what changed for the user, per skill",
- "evidence": {"<each changed file>": "a quoted added or removed line that shows what changed"},
+ "evidence": {"<each path git status lists>": "a quoted added or removed line that shows what changed",
+              ".direct.diff": "a quoted line from it (only when .direct.diff is not empty)"},
  "concerns": ["one line per reason to hold, with file and the quoted line"]}
-A pass without an evidence entry for every changed file counts as hold.
+A pass without an evidence entry for every changed path, and for `.direct.diff` when it has content,
+counts as hold. Nothing you write is published; only the verdict is used.

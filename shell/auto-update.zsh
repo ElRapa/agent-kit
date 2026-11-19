@@ -1,6 +1,8 @@
 # Keep the skill library current without a person: once a day, in the background, fast-forward
-# agent-kit's main to origin/main (only when main is checked out) and reinstall the skills if anything changed. Updates reach main only through the gated weekly
-# vendor-update PR. Log: ~/.cache/agent-kit/update.log. Off: export AGENT_KIT_AUTO_UPDATE=0.
+# agent-kit's main to origin/main (only when main is checked out) and reinstall the skills if
+# anything changed. This trusts whatever is on origin/main; protect main on GitHub (PRs only) so it
+# moves only through reviewed PRs and the gated weekly vendor-update.
+# Log: ~/.cache/agent-kit/update.log. Off: export AGENT_KIT_AUTO_UPDATE=0.
 () {
   local kit="${AGENT_KIT:-$HOME/code/agent-kit}" cache="$HOME/.cache/agent-kit"
   [[ "${AGENT_KIT_AUTO_UPDATE:-1}" == 1 && -d "$kit/.git" ]] || return 0
