@@ -1,0 +1,37 @@
+{
+  "name": "kiln-tokyo-night",
+  "type": "custom",
+  "background": {
+    "primary": "#1a1b26",
+    "diff": {
+      "added": "#374235",
+      "removed": "#4b2f3d"
+    }
+  },
+  "text": {
+    "primary": "#c0caf5",
+    "secondary": "#737aa2",
+    "link": "#7aa2f7",
+    "accent": "#bb9af7",
+    "response": "#c0caf5"
+  },
+  "border": {
+    "default": "#3b4261"
+  },
+  "status": {
+    "success": "#9ece6a",
+    "warning": "#e0af68",
+    "error": "#f7768e"
+  },
+  "ui": {
+    "comment": "#565f89",
+    "symbol": "#a9b1d6",
+    "active": "#bb9af7",
+    "focus": "#7dcfff",
+    "gradient": [
+      "#7aa2f7",
+      "#9d7cd8",
+      "#bb9af7"
+    ]
+  }
+}

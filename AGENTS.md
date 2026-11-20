@@ -10,6 +10,9 @@ Rules for every project and every harness. Projects add their own AGENTS.md on t
 - Paths: use `~/…` or repo-relative paths, never `/Users/<name>/…`.
 - Docs: a change updates the docs it makes wrong, in the same commit: README.md for people,
   AGENTS.md for agents.
+- Look: pages, reports and terminal output you build for the owner use the kiln theme in use
+  (`~/.config/kiln/tokens.css` and `components.css`, colours by role, the glow sparingly) unless the
+  project has its own.
 
 ## Skills: which one when
 

@@ -1,0 +1,63 @@
+{
+  "about": "Shared by every theme: type, spacing, glyphs, which colour plays which role, and how roles map to the 16 terminal colours. A theme (themes/*.json) can override any of it.",
+  "font": {
+    "mono": "\"JetBrains Mono\", ui-monospace, \"SF Mono\", Menlo, Consolas, monospace",
+    "sans": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", sans-serif",
+    "mono_name": "JetBrains Mono",
+    "size": 13
+  },
+  "radius": {
+    "sm": 6,
+    "md": 10,
+    "lg": 16,
+    "pill": 999
+  },
+  "space": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 24,
+    "6": 32,
+    "7": 48
+  },
+  "semantic": {
+    "accent": "violet",
+    "info": "cyan",
+    "ok": "green",
+    "warn": "amber",
+    "err": "red",
+    "link": "blue",
+    "cursor": "violet"
+  },
+  "ansi": {
+    "black": "raised",
+    "red": "red",
+    "green": "green",
+    "yellow": "amber",
+    "blue": "blue",
+    "magenta": "violet",
+    "cyan": "cyan",
+    "white": "soft",
+    "bright_black": "faint",
+    "bright_white": "ink"
+  },
+  "ansi_light": {
+    "black": "soft",
+    "white": "raised",
+    "bright_black": "muted",
+    "bright_white": "line"
+  },
+  "glyphs": {
+    "dot": "●",
+    "ok": "✓",
+    "warn": "!",
+    "err": "✗",
+    "star": "★",
+    "arrow": "→",
+    "prompt": "›",
+    "sep": "·",
+    "bar_full": "━",
+    "bar_empty": "─"
+  }
+}

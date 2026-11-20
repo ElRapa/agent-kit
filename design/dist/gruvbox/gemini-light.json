@@ -1,0 +1,37 @@
+{
+  "name": "kiln-gruvbox-light",
+  "type": "custom",
+  "background": {
+    "primary": "#fbf1c7",
+    "diff": {
+      "added": "#ded69e",
+      "removed": "#e6bc9d"
+    }
+  },
+  "text": {
+    "primary": "#3c3836",
+    "secondary": "#7c6f64",
+    "link": "#076678",
+    "accent": "#8f3f71",
+    "response": "#3c3836"
+  },
+  "border": {
+    "default": "#d5c4a1"
+  },
+  "status": {
+    "success": "#79740e",
+    "warning": "#b57614",
+    "error": "#9d0006"
+  },
+  "ui": {
+    "comment": "#a89984",
+    "symbol": "#504945",
+    "active": "#8f3f71",
+    "focus": "#427b58",
+    "gradient": [
+      "#076678",
+      "#8f3f71",
+      "#af3a03"
+    ]
+  }
+}

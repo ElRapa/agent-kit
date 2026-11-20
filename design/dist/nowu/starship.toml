@@ -1,0 +1,61 @@
+# kiln theme nowu for starship (agent-kit/design/kiln.py). Copy to ~/.config/starship.toml,
+# or keep yours and take only [palettes.kiln] and `palette`.
+palette = "kiln"
+format = "$directory$git_branch$git_status$python$nodejs$env_var$cmd_duration$line_break$character"
+
+[directory]
+style = "bold ink"
+truncation_length = 3
+
+[git_branch]
+format = "[· $branch]($style) "
+style = "muted"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "warn"
+
+[python]
+format = "[· py $version]($style) "
+style = "faint"
+
+[nodejs]
+format = "[· node $version]($style) "
+style = "faint"
+
+[env_var.AP_PROFILE]
+format = "[● $env_value]($style) "
+style = "bold accent"
+
+[cmd_duration]
+format = "[· $duration]($style) "
+style = "faint"
+
+[character]
+success_symbol = "[›](bold accent)"
+error_symbol = "[›](bold err)"
+
+[palettes.kiln]
+bg = "#070a14"
+surface = "#141620"
+raised = "#1d2029"
+line = "#252831"
+ink = "#eef1ff"
+soft = "#9fa2af"
+muted = "#6c6f7b"
+faint = "#464954"
+cyan = "#93b6ff"
+violet = "#a7a2ff"
+pink = "#dba8f2"
+amber = "#f2d48c"
+green = "#8fd3bf"
+red = "#f29aab"
+blue = "#93b6ff"
+selection = "#252748"
+accent = "#a7a2ff"
+info = "#a7a2ff"
+ok = "#8fd3bf"
+warn = "#f2d48c"
+err = "#f29aab"
+link = "#93b6ff"
+cursor = "#a7a2ff"

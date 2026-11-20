@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" data-kiln="nowu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln themes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+/* kiln theme nowu, built by agent-kit/design/kiln.py. Edit themes/nowu.json, not this. */
+:root { --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-pill: 999px; --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --bg: #070a14; --surface: #ffffff0d; --raised: #ffffff17; --line: #ffffff1f; --ink: #eef1ff; --soft: #eef1ffa8; --muted: #eef1ff70; --faint: #eef1ff45; --cyan: #93b6ff; --violet: #a7a2ff; --pink: #dba8f2; --amber: #f2d48c; --green: #8fd3bf; --red: #f29aab; --blue: #93b6ff; --selection: #8f8cff38; --accent: #a7a2ff; --info: #a7a2ff; --ok: #8fd3bf; --warn: #f2d48c; --err: #f29aab; --link: #93b6ff; --cursor: #a7a2ff; --glow: linear-gradient(120deg, #6fd0e6, #93b6ff, #a7a2ff); --glow-1: #6fd0e6; --glow-2: #93b6ff; --glow-3: #a7a2ff; --sky: linear-gradient(180deg, #04060d 0%, #080c1c 55%, #151231 100%); --blur: 24px; color-scheme: dark; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #f3f4fa; --surface: #0b10300a; --raised: #0b103014; --line: #0b10301f; --ink: #12162b; --soft: #12162bad; --muted: #12162b78; --faint: #12162b52; --cyan: #3b5ec4; --violet: #5a4fd6; --pink: #9b4c9e; --amber: #94680f; --green: #2b7663; --red: #b23d58; --blue: #3b5ec4; --selection: #5a4fd62e; --accent: #5a4fd6; --info: #5a4fd6; --ok: #2b7663; --warn: #94680f; --err: #b23d58; --link: #3b5ec4; --cursor: #5a4fd6; --glow: linear-gradient(120deg, #1d7a8c, #3b5ec4, #5a4fd6); --glow-1: #1d7a8c; --glow-2: #3b5ec4; --glow-3: #5a4fd6; --sky: linear-gradient(180deg, #eef1fb 0%, #f3f2fa 60%, #f8eef4 100%); --blur: 24px; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #f3f4fa; --surface: #0b10300a; --raised: #0b103014; --line: #0b10301f; --ink: #12162b; --soft: #12162bad; --muted: #12162b78; --faint: #12162b52; --cyan: #3b5ec4; --violet: #5a4fd6; --pink: #9b4c9e; --amber: #94680f; --green: #2b7663; --red: #b23d58; --blue: #3b5ec4; --selection: #5a4fd62e; --accent: #5a4fd6; --info: #5a4fd6; --ok: #2b7663; --warn: #94680f; --err: #b23d58; --link: #3b5ec4; --cursor: #5a4fd6; --glow: linear-gradient(120deg, #1d7a8c, #3b5ec4, #5a4fd6); --glow-1: #1d7a8c; --glow-2: #3b5ec4; --glow-3: #5a4fd6; --sky: linear-gradient(180deg, #eef1fb 0%, #f3f2fa 60%, #f8eef4 100%); --blur: 24px; color-scheme: light; }
+:root[data-theme="dark"] { --bg: #070a14; --surface: #ffffff0d; --raised: #ffffff17; --line: #ffffff1f; --ink: #eef1ff; --soft: #eef1ffa8; --muted: #eef1ff70; --faint: #eef1ff45; --cyan: #93b6ff; --violet: #a7a2ff; --pink: #dba8f2; --amber: #f2d48c; --green: #8fd3bf; --red: #f29aab; --blue: #93b6ff; --selection: #8f8cff38; --accent: #a7a2ff; --info: #a7a2ff; --ok: #8fd3bf; --warn: #f2d48c; --err: #f29aab; --link: #93b6ff; --cursor: #a7a2ff; --glow: linear-gradient(120deg, #6fd0e6, #93b6ff, #a7a2ff); --glow-1: #6fd0e6; --glow-2: #93b6ff; --glow-3: #a7a2ff; --sky: linear-gradient(180deg, #04060d 0%, #080c1c 55%, #151231 100%); --blur: 24px; color-scheme: dark; }
+/* kiln theme nowu, built by agent-kit/design/kiln.py. Edit themes/nowu.json, not this. */
+:root[data-kiln="nowu"] { --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-pill: 999px; --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --bg: #070a14; --surface: #ffffff0d; --raised: #ffffff17; --line: #ffffff1f; --ink: #eef1ff; --soft: #eef1ffa8; --muted: #eef1ff70; --faint: #eef1ff45; --cyan: #93b6ff; --violet: #a7a2ff; --pink: #dba8f2; --amber: #f2d48c; --green: #8fd3bf; --red: #f29aab; --blue: #93b6ff; --selection: #8f8cff38; --accent: #a7a2ff; --info: #a7a2ff; --ok: #8fd3bf; --warn: #f2d48c; --err: #f29aab; --link: #93b6ff; --cursor: #a7a2ff; --glow: linear-gradient(120deg, #6fd0e6, #93b6ff, #a7a2ff); --glow-1: #6fd0e6; --glow-2: #93b6ff; --glow-3: #a7a2ff; --sky: linear-gradient(180deg, #04060d 0%, #080c1c 55%, #151231 100%); --blur: 24px; color-scheme: dark; }
+@media (prefers-color-scheme: light) { :root[data-kiln="nowu"]:not([data-theme="dark"]) { --bg: #f3f4fa; --surface: #0b10300a; --raised: #0b103014; --line: #0b10301f; --ink: #12162b; --soft: #12162bad; --muted: #12162b78; --faint: #12162b52; --cyan: #3b5ec4; --violet: #5a4fd6; --pink: #9b4c9e; --amber: #94680f; --green: #2b7663; --red: #b23d58; --blue: #3b5ec4; --selection: #5a4fd62e; --accent: #5a4fd6; --info: #5a4fd6; --ok: #2b7663; --warn: #94680f; --err: #b23d58; --link: #3b5ec4; --cursor: #5a4fd6; --glow: linear-gradient(120deg, #1d7a8c, #3b5ec4, #5a4fd6); --glow-1: #1d7a8c; --glow-2: #3b5ec4; --glow-3: #5a4fd6; --sky: linear-gradient(180deg, #eef1fb 0%, #f3f2fa 60%, #f8eef4 100%); --blur: 24px; color-scheme: light; } }
+:root[data-kiln="nowu"][data-theme="light"] { --bg: #f3f4fa; --surface: #0b10300a; --raised: #0b103014; --line: #0b10301f; --ink: #12162b; --soft: #12162bad; --muted: #12162b78; --faint: #12162b52; --cyan: #3b5ec4; --violet: #5a4fd6; --pink: #9b4c9e; --amber: #94680f; --green: #2b7663; --red: #b23d58; --blue: #3b5ec4; --selection: #5a4fd62e; --accent: #5a4fd6; --info: #5a4fd6; --ok: #2b7663; --warn: #94680f; --err: #b23d58; --link: #3b5ec4; --cursor: #5a4fd6; --glow: linear-gradient(120deg, #1d7a8c, #3b5ec4, #5a4fd6); --glow-1: #1d7a8c; --glow-2: #3b5ec4; --glow-3: #5a4fd6; --sky: linear-gradient(180deg, #eef1fb 0%, #f3f2fa 60%, #f8eef4 100%); --blur: 24px; color-scheme: light; }
+:root[data-kiln="nowu"][data-theme="dark"] { --bg: #070a14; --surface: #ffffff0d; --raised: #ffffff17; --line: #ffffff1f; --ink: #eef1ff; --soft: #eef1ffa8; --muted: #eef1ff70; --faint: #eef1ff45; --cyan: #93b6ff; --violet: #a7a2ff; --pink: #dba8f2; --amber: #f2d48c; --green: #8fd3bf; --red: #f29aab; --blue: #93b6ff; --selection: #8f8cff38; --accent: #a7a2ff; --info: #a7a2ff; --ok: #8fd3bf; --warn: #f2d48c; --err: #f29aab; --link: #93b6ff; --cursor: #a7a2ff; --glow: linear-gradient(120deg, #6fd0e6, #93b6ff, #a7a2ff); --glow-1: #6fd0e6; --glow-2: #93b6ff; --glow-3: #a7a2ff; --sky: linear-gradient(180deg, #04060d 0%, #080c1c 55%, #151231 100%); --blur: 24px; color-scheme: dark; }
+/* kiln components: plain classes on top of tokens.css. Use what you need; nothing here is required. */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); background-image: var(--sky); background-attachment: fixed; min-height: 100vh; color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--link); text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent); text-underline-offset: 3px; }
+code, pre, kbd { font-family: var(--mono); font-size: .9em; }
+::selection { background: var(--selection); }
+
+/* Headings: heavy mono, tight tracking; an <em> inside is the quiet second line. */
+.k-h1, .k-h2 { font-family: var(--mono); font-weight: 800; letter-spacing: -.045em; line-height: 1.08; margin: 0; }
+.k-h1 { font-size: clamp(2rem, 4.4vw, 3.4rem); }
+.k-h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
+.k-h1 em, .k-h2 em { display: block; font-weight: 400; font-style: italic; color: var(--muted); letter-spacing: -.03em; }
+.k-lead { color: var(--soft); max-width: 60ch; font-size: 1.06rem; }
+
+/* Kicker: the small tracked label above a section ("03 · review"). */
+.k-kicker { font: 600 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.k-kicker b { font-weight: 800; letter-spacing: .05em; margin-right: .8em; background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Tag: a severity or state in small tracked capitals. */
+.k-tag { font: 700 10.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+.k-tag.accent { background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent; } .k-tag.info { color: var(--info); } .k-tag.ok { color: var(--ok); }
+.k-tag.warn { color: var(--warn); } .k-tag.err { color: var(--err); } .k-tag.muted { color: var(--muted); }
+
+/* Pill buttons; .glow gets the gradient rim, use it once per screen. */
+.k-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: var(--r-pill);
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 14px/1 var(--sans);
+  text-decoration: none; cursor: pointer; }
+.k-pill:hover { border-color: var(--muted); }
+.k-pill.glow { border-color: transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box,
+  linear-gradient(var(--bg), var(--bg)) padding-box, var(--glow) border-box; }
+.k-glow-text { background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Card and terminal window. */
+.k-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s-5);
+  -webkit-backdrop-filter: blur(var(--blur)); backdrop-filter: blur(var(--blur)); }
+.k-term { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden;
+  -webkit-backdrop-filter: blur(var(--blur)); backdrop-filter: blur(var(--blur));
+  font: 13px/1.6 var(--mono); color: var(--ink); }
+.k-term > header { display: flex; gap: 10px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line);
+  color: var(--faint); font-size: 12px; }
+.k-term > header::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow-2); }
+.k-term pre { margin: 0; padding: 14px 16px; white-space: pre; overflow-x: auto; font-size: 12.5px; }
+.k-term .p { color: var(--accent); } .k-term .d { color: var(--muted); } .k-term .f { color: var(--faint); }
+.k-term .b { font-weight: 700; } .k-term .i { color: var(--info); } .k-term .ok { color: var(--ok); }
+.k-term .w { color: var(--warn); } .k-term .e { color: var(--err); } .k-term .a { color: var(--accent); font-weight: 700; }
+/* The fade: highlighted words take the glow, like a sky from blue to dusk. */
+.k-fade, .k-term .g { background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+
+/* Stat and meter. */
+.k-stat b { display: block; font: 800 2.4rem/1 var(--mono); letter-spacing: -.05em; }
+.k-stat span { font: 600 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.k-meter { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.k-meter > i { display: block; height: 100%; width: var(--v, 0%); background: var(--glow); border-radius: 2px; }
+.k-meter.warn > i { background: var(--warn); } .k-meter.err > i { background: var(--err); }
+
+/* Block cursor after a word: <span class="k-cursor"></span> */
+.k-cursor { display: inline-block; width: .55em; height: 1em; vertical-align: -.12em; margin-left: .06em; background: var(--glow);
+  animation: k-blink 1s steps(1) 6; }
+@keyframes k-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .k-cursor { animation: none; } }
+
+.k-rule { border: 0; border-top: 1px solid var(--line); margin: var(--s-7) 0; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.brand { font: 800 15px/1 var(--mono); letter-spacing: -.03em; }
+.pick { display: flex; flex-wrap: wrap; gap: 6px; }
+.pick button { font: 500 12.5px/1 var(--mono); padding: 8px 12px; border-radius: var(--r-pill); border: 1px solid var(--line);
+  background: var(--surface); color: var(--muted); cursor: pointer; }
+.pick button[aria-pressed="true"] { color: var(--ink); border-color: transparent;
+  background: linear-gradient(var(--raised), var(--raised)) padding-box, linear-gradient(var(--bg), var(--bg)) padding-box,
+  var(--glow) border-box; }
+.pick button:focus-visible, .k-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 32px; margin-top: 72px; }
+section > * { min-width: 0; }
+@media (max-width: 760px) { section { grid-template-columns: 1fr; gap: 14px; } }
+.about { color: var(--muted); font: italic 14px/1.5 var(--mono); margin: 14px 0 0; min-height: 1.5em; }
+.sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+.sw div { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.sw i { display: block; height: 50px; }
+.sw p { margin: 0; padding: 8px 10px; font: 12px/1.4 var(--mono); }
+.sw p span { display: block; color: var(--faint); }
+.ink { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin-top: 18px; }
+.ink div { padding: 10px 0 0; border-top: 3px solid; font: 12px/1.5 var(--mono); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid2 > * { min-width: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.findings { list-style: none; margin: 0; padding: 0; }
+.findings li { display: grid; grid-template-columns: 24px 110px minmax(0, 1fr); gap: 8px; padding: 9px 12px; border-radius: var(--r-md); font-size: 14px; }
+.findings li:first-child { background: var(--raised); }
+.findings li > span:first-child { font: 12px var(--mono); color: var(--faint); }
+.widget { width: 272px; max-width: 100%; background: var(--surface); -webkit-backdrop-filter: blur(var(--blur)); backdrop-filter: blur(var(--blur));
+  border: 1px solid var(--line); border-radius: 14px; padding: 14px; font-family: var(--mono); }
+.widget .k { display: flex; justify-content: space-between; font: 800 8.5px/1 var(--mono); letter-spacing: .08em; color: var(--faint); }
+.widget .t { font-weight: 800; letter-spacing: -.02em; margin-top: 8px; }
+.widget .s { color: var(--muted); font-size: 11px; margin: 2px 0 12px 16px; }
+.widget .l { display: flex; justify-content: space-between; font-size: 11.5px; margin-top: 10px; }
+.widget .l span:last-child { font-weight: 700; }
+.widget .x { color: var(--faint); font-size: 10px; margin-top: 4px; }
+.widget .foot { color: var(--faint); font-size: 10px; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 8px; }
+.strip { width: 4px; height: 90px; border-radius: 2px; background: var(--line); position: relative; overflow: hidden; }
+.strip i { position: absolute; left: 0; right: 0; bottom: 0; height: 69%; background: linear-gradient(0deg, var(--glow-1), var(--glow-2), var(--glow-3)); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="brand">kiln<span class="k-cursor"></span></span>
+    <div class="pick" id="pick" role="group" aria-label="Theme"></div>
+    <button class="k-pill" id="mode" type="button">light / dark</button>
+  </div>
+
+  <p class="k-kicker"><b>00</b>themes</p>
+  <h1 class="k-h1" style="margin-top:14px">One look for every tool.<em>Pick a sky; everything follows.</em></h1>
+  <p class="about" id="about"></p>
+  <p class="k-lead">Each theme is one small file with a dark and a light palette and a glow, the fading accent. <code>kiln use &lt;theme&gt;</code> switches Ghostty, the edge widget, <code>ap</code> and pages at once. <code>kiln import</code> turns any Ghostty or iTerm2 theme into a new one.</p>
+  <div class="row" style="margin-top:22px"><a class="k-pill glow" href="#use">How to use it</a><a class="k-pill" href="#palette">Palette</a></div>
+
+  <section id="palette">
+    <p class="k-kicker"><b>01</b>palette</p>
+    <div>
+      <h2 class="k-h2">Five steps of ink.<em>One fading accent, three states.</em></h2>
+      <p class="k-lead">Hierarchy comes from the ink steps, not from colour. The glow marks what matters most and is used once or twice per screen. Green, amber and red only say how something stands.</p>
+      <div class="k-meter" style="margin-top:22px;height:10px;border-radius:5px;--v:100%"><i></i></div>
+      <div class="ink">
+        <div style="border-color:var(--ink)">ink<br><span style="color:var(--faint)">text, active</span></div>
+        <div style="border-color:var(--soft)">soft<br><span style="color:var(--faint)">body</span></div>
+        <div style="border-color:var(--muted)">muted<br><span style="color:var(--faint)">labels</span></div>
+        <div style="border-color:var(--faint)">faint<br><span style="color:var(--faint)">meta, ticks</span></div>
+        <div style="border-color:var(--line)">line<br><span style="color:var(--faint)">rules</span></div>
+      </div>
+      <div class="sw" id="sw" style="margin-top:22px"></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>02</b>type</p>
+    <div>
+      <h2 class="k-h2">Mono for structure.<em>Sans for reading.</em></h2>
+      <p class="k-lead">Headings, labels and numbers are JetBrains Mono at weight 800 with tight tracking; the second line is italic and muted. Labels are small capitals with wide tracking.</p>
+      <div class="row" style="margin-top:18px">
+        <span class="k-tag accent">must fix</span><span class="k-tag muted">should fix</span><span class="k-tag">nice to have</span>
+        <span class="k-tag ok">passed</span><span class="k-tag warn">70% used</span><span class="k-tag err">failed</span>
+      </div>
+      <div class="row" style="margin-top:22px;gap:36px">
+        <div class="k-stat"><b>5</b><span>themes</span></div>
+        <div class="k-stat"><b class="k-glow-text">69%</b><span>left today</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>03</b>terminal</p>
+    <div class="grid2">
+      <div class="k-term"><header>ap</header><pre><span class="g">ap</span>  <span class="b">agent profiles</span> <span class="f">·</span> <span class="b">● work-eco</span>
+
+ <span class="f b">START HERE</span>
+ <span class="g">★ setup</span> <span class="i">[context]</span>   guided setup of a context
+ <span class="g">★ use</span> <span class="i">[profile]</span>     load a profile into this shell
+ <span class="g">★ status</span>            the profile used last, limits
+ <span class="g">★ resolve</span> <span class="i">[profile]</span> which model each role gets
+
+ <span class="f b">EVERY DAY</span>
+   <span class="b">off</span>               <span class="d">drop the loaded profile</span>
+   <span class="b">account</span> <span class="i">[name]</span>    <span class="d">list or switch accounts</span>
+   <span class="f">…</span></pre></div>
+      <div class="k-term"><header>ap status</header><pre><span class="ok">●</span> <span class="b">work-eco@second</span>  <span class="d">~/work/acme · 2m ago</span>
+
+  copilot-work  <span class="f">month</span>  <span class="g">━━━━</span><span class="f">────────</span> <span class="b"> 31%</span>
+  litellm-work  <span class="f">day</span>    <span class="w">━━━━━━━━━</span><span class="f">───</span> <span class="b"> 74%</span>
+  claude-work   <span class="f">5h</span>     <span class="e">━━━━━━━━━━━</span><span class="f">─</span> <span class="b"> 92%</span>
+
+<span class="a">›</span> <span class="b">~/work/acme</span> <span class="d">· main</span> <span class="b">● work-eco</span>
+<span class="a">›</span> <span class="k-cursor"></span></pre></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>04</b>review</p>
+    <div class="k-card">
+      <p style="margin:0 0 12px;font:600 14px var(--mono)"><span class="k-fade">›</span> /review</p>
+      <ul class="findings">
+        <li><span>1</span><span class="k-tag accent">must fix</span><span>The feed crashes on every request</span></li>
+        <li><span>2</span><span class="k-tag accent">must fix</span><span>SQL injection through <code>?sort=</code></span></li>
+        <li><span>3</span><span class="k-tag muted">should fix</span><span>Search has no tests</span></li>
+        <li><span>4</span><span class="k-tag">nice to have</span><span>Two helpers could be one</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>05</b>widget</p>
+    <div class="row" style="align-items:flex-start;gap:28px">
+      <div class="strip"><i></i></div>
+      <div class="widget">
+        <div class="k"><span>AGENT PROFILE</span><span>69% LEFT</span></div>
+        <div class="t"><span style="color:var(--blue)">●</span> work-eco</div>
+        <div class="s">~/work/acme · 2m ago</div>
+        <div class="l"><span>copilot-work <span style="color:var(--faint)">month</span></span><span>31%</span></div>
+        <div class="k-meter" style="margin-top:5px;--v:31%"><i></i></div>
+        <div class="x">resets 1 Dec</div>
+        <div class="l"><span>litellm-work <span style="color:var(--faint)">day</span></span><span style="color:var(--warn)">74%</span></div>
+        <div class="k-meter warn" style="margin-top:5px;--v:74%"><i></i></div>
+        <div class="x">$14.80 of $20</div>
+        <div class="foot">click to refresh · read 15:42</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="use">
+    <p class="k-kicker"><b>06</b>use it</p>
+    <div>
+      <h2 class="k-h2">One command to switch.<em>One file per theme.</em></h2>
+      <div class="k-term" style="margin-top:18px"><header>kiln</header><pre><span class="f">$</span> kiln list                          <span class="d"># themes, ● the one in use</span>
+<span class="f">$</span> kiln use nightsky                  <span class="d"># Ghostty, widget, ap, pages</span>
+<span class="f">$</span> kiln import Dracula --name dracula <span class="d"># any Ghostty or iTerm2 theme</span>
+<span class="f">$</span> kiln build                         <span class="d"># after editing a theme</span></pre></div>
+    </div>
+  </section>
+</div>
+<script>
+const THEMES = [{"name": "nowu", "label": "nowu", "about": "Example variant: the night sky theme with a cyan-led glow, for nowu's pages and tools. Only the keys that differ."}];
+const names = ["bg","surface","raised","line","ink","soft","muted","faint","violet","blue","cyan","pink","green","amber","red"];
+const roles = {violet:"accent",green:"ok",amber:"warn",red:"err"};
+const root = document.documentElement;
+function draw() {
+  const cs = getComputedStyle(root);
+  document.getElementById("sw").innerHTML = names.map(n => {
+    const v = cs.getPropertyValue("--" + n).trim();
+    return `<div><i style="background:${v}"></i><p>${n}<span>${roles[n] ? roles[n] + " · " : ""}${v}</span></p></div>`;
+  }).join("");
+  const t = THEMES.find(t => t.name === root.dataset.kiln) || THEMES[0];
+  document.getElementById("about").textContent = t.label + ": " + t.about;
+  document.querySelectorAll("#pick button").forEach(b => b.setAttribute("aria-pressed", b.dataset.name === t.name));
+}
+const pick = document.getElementById("pick");
+if (THEMES.length > 1) {
+  pick.innerHTML = THEMES.map(t => `<button type="button" data-name="${t.name}">${t.label}</button>`).join("");
+  pick.onclick = e => { const b = e.target.closest("button"); if (b) { root.dataset.kiln = b.dataset.name; draw(); } };
+}
+document.getElementById("mode").onclick = () => {
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : !matchMedia("(prefers-color-scheme: light)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  draw();
+};
+draw();
+</script>
+</body>
+</html>

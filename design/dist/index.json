@@ -1,0 +1,38 @@
+[
+  {
+    "name": "catppuccin",
+    "label": "Catppuccin",
+    "kind": "theme",
+    "about": "Mocha (dark) and Latte (light): soft pastels, the most used theme family today."
+  },
+  {
+    "name": "gruvbox",
+    "label": "Gruvbox",
+    "kind": "theme",
+    "about": "Retro warm contrast, dark and light. Popular for long sessions."
+  },
+  {
+    "name": "kiln",
+    "label": "Kiln",
+    "kind": "theme",
+    "about": "Warm near-black and cream ink; the accent fades like a sky after sunset. Made for this setup."
+  },
+  {
+    "name": "nightsky",
+    "label": "Night sky",
+    "kind": "theme",
+    "about": "Deep night blue, starlight ink in alpha steps, one twilight accent that fades from blue to violet to dusk. Translucent surfaces, few colours."
+  },
+  {
+    "name": "tokyo-night",
+    "label": "Tokyo Night",
+    "kind": "theme",
+    "about": "The theme your Ghostty and herdr used. Night and Day variants."
+  },
+  {
+    "name": "nowu",
+    "label": "nowu",
+    "kind": "variant",
+    "about": "Example variant: the night sky theme with a cyan-led glow, for nowu's pages and tools. Only the keys that differ."
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "name": "kiln-catppuccin-light",
+  "type": "custom",
+  "background": {
+    "primary": "#eff1f5",
+    "diff": {
+      "added": "#c8dfc9",
+      "removed": "#e9bfcc"
+    }
+  },
+  "text": {
+    "primary": "#4c4f69",
+    "secondary": "#7c7f93",
+    "link": "#1e66f5",
+    "accent": "#8839ef",
+    "response": "#4c4f69"
+  },
+  "border": {
+    "default": "#bcc0cc"
+  },
+  "status": {
+    "success": "#40a02b",
+    "warning": "#df8e1d",
+    "error": "#d20f39"
+  },
+  "ui": {
+    "comment": "#9ca0b0",
+    "symbol": "#5c5f77",
+    "active": "#8839ef",
+    "focus": "#04a5e5",
+    "gradient": [
+      "#1e66f5",
+      "#7287fd",
+      "#8839ef"
+    ]
+  }
+}

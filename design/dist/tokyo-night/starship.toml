@@ -1,0 +1,61 @@
+# kiln theme tokyo-night for starship (agent-kit/design/kiln.py). Copy to ~/.config/starship.toml,
+# or keep yours and take only [palettes.kiln] and `palette`.
+palette = "kiln"
+format = "$directory$git_branch$git_status$python$nodejs$env_var$cmd_duration$line_break$character"
+
+[directory]
+style = "bold ink"
+truncation_length = 3
+
+[git_branch]
+format = "[· $branch]($style) "
+style = "muted"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "warn"
+
+[python]
+format = "[· py $version]($style) "
+style = "faint"
+
+[nodejs]
+format = "[· node $version]($style) "
+style = "faint"
+
+[env_var.AP_PROFILE]
+format = "[● $env_value]($style) "
+style = "bold accent"
+
+[cmd_duration]
+format = "[· $duration]($style) "
+style = "faint"
+
+[character]
+success_symbol = "[›](bold accent)"
+error_symbol = "[›](bold err)"
+
+[palettes.kiln]
+bg = "#1a1b26"
+surface = "#16161e"
+raised = "#292e42"
+line = "#3b4261"
+ink = "#c0caf5"
+soft = "#a9b1d6"
+muted = "#737aa2"
+faint = "#565f89"
+cyan = "#7dcfff"
+violet = "#bb9af7"
+pink = "#ff9e64"
+amber = "#e0af68"
+green = "#9ece6a"
+red = "#f7768e"
+blue = "#7aa2f7"
+selection = "#283457"
+accent = "#bb9af7"
+info = "#7dcfff"
+ok = "#9ece6a"
+warn = "#e0af68"
+err = "#f7768e"
+link = "#7aa2f7"
+cursor = "#bb9af7"

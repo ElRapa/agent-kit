@@ -1,0 +1,23 @@
+# kiln theme kiln (dark), built by agent-kit/design/kiln.py
+palette = 0=#1e1b18
+palette = 1=#ef8f86
+palette = 2=#a3d69a
+palette = 3=#f0cd8a
+palette = 4=#8fb4f2
+palette = 5=#a99cf8
+palette = 6=#8bd8ea
+palette = 7=#cbc4b6
+palette = 8=#675f55
+palette = 9=#eea89e
+palette = 10=#b8dbac
+palette = 11=#efd4a1
+palette = 12=#a9c2ec
+palette = 13=#bcb1f0
+palette = 14=#a6dce6
+palette = 15=#ede7db
+background = #0c0b0a
+foreground = #ede7db
+cursor-color = #a99cf8
+cursor-text = #0c0b0a
+selection-background = #2e2937
+selection-foreground = #ede7db

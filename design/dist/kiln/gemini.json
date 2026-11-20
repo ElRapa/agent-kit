@@ -1,0 +1,37 @@
+{
+  "name": "kiln-kiln",
+  "type": "custom",
+  "background": {
+    "primary": "#0c0b0a",
+    "diff": {
+      "added": "#2d382a",
+      "removed": "#3e2825"
+    }
+  },
+  "text": {
+    "primary": "#ede7db",
+    "secondary": "#988f81",
+    "link": "#8fb4f2",
+    "accent": "#a99cf8",
+    "response": "#ede7db"
+  },
+  "border": {
+    "default": "#2c2824"
+  },
+  "status": {
+    "success": "#a3d69a",
+    "warning": "#f0cd8a",
+    "error": "#ef8f86"
+  },
+  "ui": {
+    "comment": "#675f55",
+    "symbol": "#cbc4b6",
+    "active": "#a99cf8",
+    "focus": "#8bd8ea",
+    "gradient": [
+      "#6f86f2",
+      "#a99cf8",
+      "#eaa6d2"
+    ]
+  }
+}

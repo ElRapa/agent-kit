@@ -1,0 +1,37 @@
+{
+  "name": "kiln-nowu",
+  "type": "custom",
+  "background": {
+    "primary": "#070a14",
+    "diff": {
+      "added": "#25363a",
+      "removed": "#3b2a35"
+    }
+  },
+  "text": {
+    "primary": "#eef1ff",
+    "secondary": "#6c6f7b",
+    "link": "#93b6ff",
+    "accent": "#a7a2ff",
+    "response": "#eef1ff"
+  },
+  "border": {
+    "default": "#252831"
+  },
+  "status": {
+    "success": "#8fd3bf",
+    "warning": "#f2d48c",
+    "error": "#f29aab"
+  },
+  "ui": {
+    "comment": "#464954",
+    "symbol": "#9fa2af",
+    "active": "#a7a2ff",
+    "focus": "#a7a2ff",
+    "gradient": [
+      "#6fd0e6",
+      "#93b6ff",
+      "#a7a2ff"
+    ]
+  }
+}

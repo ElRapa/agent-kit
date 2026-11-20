@@ -10,8 +10,14 @@ export DO_NOT_TRACK=1   # no telemetry from the skills CLI
 # 1.8+ is needed for repo@commit pins. Bump it by hand after reading its changelog.
 SKILLS_CLI="skills@1.8.1"
 
-command -v npx >/dev/null || { echo "needs node (brew install node)" >&2; exit 1; }
 [ "${1:-}" = "--pull" ] && git -C "$KIT" pull --ff-only
+
+# Shared look (design/, kiln): `kiln` on the PATH, and ~/.config/kiln plus Ghostty's theme links
+# pointing at the theme in use (kiln the first time; `kiln use <theme>` switches).
+mkdir -p "$HOME/.local/bin" && ln -sfn "$KIT/design/kiln.py" "$HOME/.local/bin/kiln"
+python3 "$KIT/design/kiln.py" use >/dev/null || echo "skip: kiln themes not linked" >&2
+
+command -v npx >/dev/null || { echo "needs node (brew install node)" >&2; exit 1; }
 
 npx -y "$SKILLS_CLI" add "$KIT" -g -y --skill '*'
 # Packs too big to copy into this repo, pinned in vendor.toml [[direct]].

@@ -1,0 +1,23 @@
+# kiln theme catppuccin (light), built by agent-kit/design/kiln.py
+palette = 0=#5c5f77
+palette = 1=#d20f39
+palette = 2=#40a02b
+palette = 3=#df8e1d
+palette = 4=#1e66f5
+palette = 5=#8839ef
+palette = 6=#04a5e5
+palette = 7=#ccd0da
+palette = 8=#7c7f93
+palette = 9=#da4e6e
+palette = 10=#71b764
+palette = 11=#e3aa59
+palette = 12=#598df5
+palette = 13=#a56df1
+palette = 14=#46bae9
+palette = 15=#bcc0cc
+background = #eff1f5
+foreground = #4c4f69
+cursor-color = #8839ef
+cursor-text = #eff1f5
+selection-background = #dcd6f0
+selection-foreground = #4c4f69

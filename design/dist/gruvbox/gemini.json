@@ -1,0 +1,37 @@
+{
+  "name": "kiln-gruvbox",
+  "type": "custom",
+  "background": {
+    "primary": "#282828",
+    "diff": {
+      "added": "#484828",
+      "removed": "#562f2b"
+    }
+  },
+  "text": {
+    "primary": "#ebdbb2",
+    "secondary": "#a89984",
+    "link": "#83a598",
+    "accent": "#d3869b",
+    "response": "#ebdbb2"
+  },
+  "border": {
+    "default": "#504945"
+  },
+  "status": {
+    "success": "#b8bb26",
+    "warning": "#fabd2f",
+    "error": "#fb4934"
+  },
+  "ui": {
+    "comment": "#7c6f64",
+    "symbol": "#d5c4a1",
+    "active": "#d3869b",
+    "focus": "#8ec07c",
+    "gradient": [
+      "#83a598",
+      "#d3869b",
+      "#fe8019"
+    ]
+  }
+}

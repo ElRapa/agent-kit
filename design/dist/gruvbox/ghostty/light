@@ -1,0 +1,23 @@
+# kiln theme gruvbox (light), built by agent-kit/design/kiln.py
+palette = 0=#504945
+palette = 1=#9d0006
+palette = 2=#79740e
+palette = 3=#b57614
+palette = 4=#076678
+palette = 5=#8f3f71
+palette = 6=#427b58
+palette = 7=#ebdbb2
+palette = 8=#7c6f64
+palette = 9=#b7433c
+palette = 10=#9d9742
+palette = 11=#c99846
+palette = 12=#4b8d8e
+palette = 13=#ad7189
+palette = 14=#769c77
+palette = 15=#d5c4a1
+background = #fbf1c7
+foreground = #3c3836
+cursor-color = #8f3f71
+cursor-text = #fbf1c7
+selection-background = #d5c4a1
+selection-foreground = #3c3836
