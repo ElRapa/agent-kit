@@ -1,0 +1,6 @@
+{
+  "name": "nowu",
+  "about": "Example variant: kiln with a cyan accent and a warmer glow, for nowu's pages and tools.",
+  "semantic": { "accent": "cyan", "info": "blue", "cursor": "cyan" },
+  "glow": ["amber", "pink", "violet"]
+}

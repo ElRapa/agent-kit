@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{name}} design tokens</title>
+<style>
+/*STYLE*/
+.wrap { max-width: 1080px; margin: 0 auto; padding: 56px 20px 80px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 64px; }
+.brand { font: 800 15px/1 var(--mono); letter-spacing: -.03em; }
+section { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 32px; margin-top: 72px; }
+@media (max-width: 760px) { section { grid-template-columns: 1fr; gap: 14px; } }
+.sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+.sw div { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.sw i { display: block; height: 54px; }
+.sw p { margin: 0; padding: 8px 10px; font: 12px/1.4 var(--mono); }
+.sw p span { display: block; color: var(--faint); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.findings { list-style: none; margin: 0; padding: 0; }
+.findings li { display: grid; grid-template-columns: 24px 110px 1fr; gap: 8px; padding: 9px 12px; border-radius: var(--r-md); font-size: 14px; }
+.findings li:first-child { background: var(--raised); }
+.findings li > span:first-child { font: 12px var(--mono); color: var(--faint); }
+.widget { width: 270px; background: color-mix(in srgb, var(--bg) 88%, transparent); border: 1px solid var(--line); border-radius: 14px; padding: 14px 14px 10px; font-family: var(--mono); }
+.widget .t { font-weight: 800; letter-spacing: -.02em; }
+.widget .s { color: var(--muted); font-size: 11px; margin: 2px 0 12px; }
+.widget .l { display: flex; justify-content: space-between; font-size: 11.5px; margin-top: 10px; }
+.widget .l span:last-child { font-weight: 700; }
+.widget .x { color: var(--faint); font-size: 10px; margin-top: 4px; }
+.widget .foot { color: var(--faint); font-size: 10px; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 8px; }
+.strip { width: 4px; height: 90px; border-radius: 2px; background: var(--line); position: relative; overflow: hidden; }
+.strip i { position: absolute; left: 0; right: 0; bottom: 0; height: 26%; background: var(--warn); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="brand">{{name}}<span class="k-cursor"></span></span>
+    <button class="k-pill" id="mode" type="button">light / dark</button>
+  </div>
+
+  <p class="k-kicker"><b>00</b>design tokens</p>
+  <h1 class="k-h1" style="margin-top:14px">One look for every tool.<em>Terminal, prompt, pages, widget.</em></h1>
+  <p class="k-lead">One file, <code>design/tokens.json</code>, builds the Ghostty and herdr themes, the starship prompt, a Gemini CLI theme, CSS for pages and the colours of the edge widget. A project that wants its own accent adds a small variant file instead of a copy.</p>
+  <div class="row" style="margin-top:22px"><a class="k-pill glow" href="#use">How to use it</a><a class="k-pill" href="#palette">Palette</a></div>
+
+  <section id="palette">
+    <p class="k-kicker"><b>01</b>palette</p>
+    <div>
+      <h2 class="k-h2">Warm black, cream ink.<em>Colour only where it means something.</em></h2>
+      <p class="k-lead">Surfaces are warm greys, not blue ones. Five steps of ink carry most of the hierarchy. The accents name a role: violet is the accent, cyan is info, green ok, amber warn, red error. The three-colour glow is for one thing per screen.</p>
+      <div class="sw" id="sw" style="margin-top:22px"></div>
+      <div class="k-meter" style="margin-top:18px;--v:100%"><i></i></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>02</b>type</p>
+    <div>
+      <h2 class="k-h2">Mono for structure.<em>Sans for reading.</em></h2>
+      <p class="k-lead">Headings, labels, numbers and anything you could type are JetBrains Mono at weight 800 with tight tracking. A heading's second line is the same face in italic, in muted ink. Body text is the system sans. Labels are small capitals with wide tracking.</p>
+      <div class="row" style="margin-top:18px">
+        <span class="k-tag accent">must fix</span><span class="k-tag muted">should fix</span><span class="k-tag">nice to have</span>
+        <span class="k-tag ok">passed</span><span class="k-tag warn">70% used</span><span class="k-tag err">failed</span><span class="k-tag info">not in the diff</span>
+      </div>
+      <div class="row" style="margin-top:22px">
+        <div class="k-stat"><b>4</b><span>profiles</span></div>
+        <div class="k-stat" style="margin-left:28px"><b class="k-glow-text">71%</b><span>left today</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>03</b>terminal</p>
+    <div class="grid2">
+      <div class="k-term"><header>ap</header><pre><span class="a">ap</span>  <span class="b">agent profiles</span> <span class="f">·</span> <span class="a">● work-eco</span>
+
+ <span class="f b">START HERE</span>
+ <span class="p">★</span> <span class="a">setup</span> <span class="i">[context]</span>   guided setup of a context
+ <span class="p">★</span> <span class="a">use</span> <span class="i">[profile]</span>     load a profile into this shell
+ <span class="p">★</span> <span class="a">status</span>            the profile used last, limits
+ <span class="p">★</span> <span class="a">resolve</span> <span class="i">[profile]</span> which model each role gets
+
+ <span class="f b">EVERY DAY</span>
+   <span class="b">off</span>               <span class="d">drop the loaded profile</span>
+   <span class="b">account</span> <span class="i">[name]</span>    <span class="d">list or switch accounts</span>
+   <span class="b">which</span> <span class="i">[path]</span>      <span class="d">which context a folder is</span>
+   <span class="f">…</span>
+
+ <span class="f b">EXAMPLES</span>
+   <span class="f">$</span> ap setup acme     <span class="d">a new customer context</span></pre></div>
+      <div class="k-term"><header>ap status</header><pre><span class="ok">●</span> <span class="b">work-eco@second</span>  <span class="d">~/work/acme · 2m ago</span>
+
+  copilot-work   <span class="f">month</span>  <span class="ok">━━━━</span><span class="f">────────</span> <span class="b"> 31%</span>  <span class="d">resets 1 Dec</span>
+  litellm-work   <span class="f">day</span>    <span class="w">━━━━━━━━━</span><span class="f">───</span> <span class="b"> 74%</span>  <span class="d">$14.80 of $20</span>
+  claude-work    <span class="f">5h</span>     <span class="e">━━━━━━━━━━━</span><span class="f">─</span> <span class="b"> 92%</span>  <span class="d">resets 17:40</span>
+
+<span class="f">also open  </span>private-eco
+
+<span class="p">›</span> <span class="b">~/work/acme</span> <span class="d">· main</span> <span class="p b">● work-eco</span>
+<span class="p">›</span> <span class="k-cursor"></span></pre></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>04</b>review</p>
+    <div class="k-card">
+      <p style="margin:0 0 12px;font:600 14px var(--mono)"><span style="color:var(--accent)">›</span> /review</p>
+      <ul class="findings">
+        <li><span>1</span><span class="k-tag accent">must fix</span><span>The feed crashes on every request</span></li>
+        <li><span>2</span><span class="k-tag accent">must fix</span><span>SQL injection through <code>?sort=</code></span></li>
+        <li><span>3</span><span class="k-tag muted">should fix</span><span>Search has no tests</span></li>
+        <li><span>4</span><span class="k-tag">nice to have</span><span>Two helpers could be one</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <p class="k-kicker"><b>05</b>widget</p>
+    <div class="row" style="align-items:flex-start;gap:28px">
+      <div class="strip"><i></i></div>
+      <div class="widget">
+        <div style="display:flex;justify-content:space-between;font-size:8.5px;font-weight:800;letter-spacing:.06em;color:var(--faint)"><span>AGENT PROFILE</span><span style="color:var(--warn)">26% LEFT</span></div>
+        <div class="t" style="margin-top:6px"><span style="color:var(--blue)">●</span> work-eco</div>
+        <div class="s" style="padding-left:15px">~/work/acme · 2m ago</div>
+        <div class="l"><span>copilot-work <span style="color:var(--faint)">month</span></span><span>31%</span></div>
+        <div class="k-meter" style="margin-top:5px;--v:31%"><i style="background:var(--blue)"></i></div>
+        <div class="x">resets 1 Dec</div>
+        <div class="l"><span>litellm-work <span style="color:var(--faint)">day</span></span><span style="color:var(--warn)">74%</span></div>
+        <div class="k-meter warn" style="margin-top:5px;--v:74%"><i></i></div>
+        <div class="x">$14.80 of $20</div>
+        <div class="foot">click to refresh · read 15:42</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="use">
+    <p class="k-kicker"><b>06</b>use it</p>
+    <div>
+      <h2 class="k-h2">Edit one file.<em>Build, and every tool follows.</em></h2>
+      <div class="k-term" style="margin-top:18px"><header>agent-kit</header><pre><span class="f">$</span> python3 design/build.py                    <span class="d"># kiln → design/dist/kiln/</span>
+<span class="f">$</span> python3 design/build.py variants/nowu.json <span class="d"># a project's own accent</span>
+<span class="f">$</span> ./install.sh                               <span class="d"># links themes into ~/.config</span></pre></div>
+    </div>
+  </section>
+</div>
+<script>
+const names = ["bg","surface","raised","line","ink","soft","muted","faint","violet","cyan","pink","amber","green","red","blue"];
+const roles = {violet:"accent",cyan:"info",green:"ok",amber:"warn",red:"err",blue:"link"};
+function draw() {
+  const cs = getComputedStyle(document.documentElement);
+  document.getElementById("sw").innerHTML = names.map(n => {
+    const v = cs.getPropertyValue("--" + n).trim();
+    return `<div><i style="background:${v}"></i><p>${n}<span>${roles[n] ? roles[n] + " · " : ""}${v}</span></p></div>`;
+  }).join("");
+}
+draw();
+document.getElementById("mode").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : !matchMedia("(prefers-color-scheme: light)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+  draw();
+};
+</script>
+</body>
+</html>
