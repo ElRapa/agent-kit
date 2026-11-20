@@ -33,6 +33,7 @@ this machine, or a Tailscale link when the owner is elsewhere.
 | Large or risky PR, one-way-door design | change-by-change-review or council |
 | Harsh structure review, on request | thermo-nuclear-code-quality-review |
 | Whole repo health | ponytail-audit |
+| What did we defer? Before a release or a cleanup | ponytail-debt (lists every `shortcut:` comment) |
 | Pipeline, dbt, SQL, ingestion | data-pipeline-review (with ponytail-review) |
 | LLM feature, prompt, agent, RAG | ai-feature-review |
 | Explain a system, flow, schema or plan to a person | archify (diagram or one-page explainer) |
