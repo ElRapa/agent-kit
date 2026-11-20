@@ -1,15 +1,17 @@
 # design: kiln, themes for every tool
 
-kiln gives the terminal, the prompt, herdr, Gemini CLI, web pages, `ap` and the agent-stack edge
+kiln gives the terminal, the prompt, herdr, opencode, Gemini CLI, web pages, `ap` and the agent-stack edge
 widget one look. Switch the theme in one place, and those tools pick it up.
-Gallery of all themes: open `dist/gallery.html`.
+Gallery of all themes, dark and light: `kiln gallery` opens `dist/gallery.html`.
 
 ```bash
 kiln list                          # themes; ● marks the one in use
 kiln use nightsky                  # switch (Ghostty: cmd+shift+, ; widget: reload Hammerspoon)
 kiln lightswitch                   # flip every tool between dark and light (lightswitch auto: follow macOS)
 kiln use --mode dark               # same, as part of a switch: always dark (or light, or auto)
-kiln import <file> --name dracula  # a Ghostty theme or an iTerm2 .itermcolors/preferences plist
+kiln gallery                       # open the page with every theme
+kiln installed                     # Ghostty themes and iTerm2 profiles already on this Mac
+kiln import Dracula --name dracula # an installed Ghostty theme by name, a theme file, .itermcolors, or `iterm`
 kiln build                         # after editing base.json or a theme; --check in CI
 ```
 
@@ -48,7 +50,8 @@ variant: it `extends` nightsky and changes only the glow.
 | File | For | How it is used |
 |---|---|---|
 | `ghostty/dark`, `ghostty/light` | Ghostty | `kiln use` links `kiln-current(-light)` to the theme in use and `kiln-<theme>(-light)` for each; dotfiles sets `theme = dark:kiln-current,light:kiln-current-light` |
-| `herdr.toml` | herdr | paste its `[theme.custom]` into dotfiles' herdr config (herdr has no include) |
+| `herdr.toml` | herdr | for reference: `kiln use` and `kiln lightswitch` write the same tables into the kiln block of herdr's config (herdr has no include); reload with prefix+shift+r |
+| (none) | opencode | `kiln use` sets `~/.config/opencode/cli.json` to opencode's `system` theme, which draws with the terminal's kiln colours, and its mode to the kiln mode |
 | `starship.toml` | starship | copy to `~/.config/starship.toml`, or take only `[palettes.kiln]` |
 | `gemini.json`, `gemini-light.json` | Gemini CLI | `"ui": { "theme": "<full path to ~/.config/kiln/gemini.json>" }` (Gemini loads theme files only below your home folder) |
 | `tokens.css`, `components.css` | pages, reports, nowu | link or inline; classes start with `k-`, `.k-fade` gives text the glow |
