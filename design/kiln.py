@@ -326,27 +326,65 @@ def current() -> str | None:
     return p.resolve().name if p.is_symlink() else None
 
 
-def use(name: str | None) -> int:
-    """Point ~/.config/kiln at a theme; Ghostty's kiln-current themes follow through that link."""
+PINS = ("auto", "dark", "light")
+
+
+def current_mode() -> str:
+    """dark, light or auto (follow macOS); kept in ~/.config/kiln-mode, read by ap and the widget too."""
+    try:
+        m = (CONFIG / "kiln-mode").read_text().strip()
+    except OSError:
+        return "auto"
+    return m if m in PINS else "auto"
+
+
+def use(name: str | None, mode: str | None = None) -> int:
+    """Point ~/.config/kiln at a theme; Ghostty's kiln-current themes follow through that link.
+
+    mode dark or light pins every tool to that mode: both Ghostty kiln-current names point at it,
+    and ap and the widget read ~/.config/kiln-mode. auto follows macOS. None keeps the last one."""
     name = name or current() or "kiln"
+    mode = mode or current_mode()
     if not (DIST / name).is_dir():
         raise SystemExit(f"kiln: no built theme {name!r}; kiln list shows them")
     link(DIST / name, CONFIG / "kiln")
+    (CONFIG / "kiln-mode").write_text(mode + "\n")
     themes = CONFIG / "ghostty" / "themes"
-    link(CONFIG / "kiln" / "ghostty" / "dark", themes / "kiln-current")
-    link(CONFIG / "kiln" / "ghostty" / "light", themes / "kiln-current-light")
+    dark = "light" if mode == "light" else "dark"
+    light = "dark" if mode == "dark" else "light"
+    link(CONFIG / "kiln" / "ghostty" / dark, themes / "kiln-current")
+    link(CONFIG / "kiln" / "ghostty" / light, themes / "kiln-current-light")
     for t in theme_files():  # every theme also by its own name, to try one in Ghostty directly
         if (DIST / t).is_dir():
             base = "kiln" if t == "kiln" else f"kiln-{t}"
             link(DIST / t / "ghostty" / "dark", themes / base)
             link(DIST / t / "ghostty" / "light", themes / f"{base}-light")
-    print(f"kiln: using {name}. Ghostty: cmd+shift+, to reload. Widget: reload Hammerspoon.\n"
+    shown = "follows macOS" if mode == "auto" else f"always {mode}"
+    print(f"kiln: using {name}, {shown}. Ghostty: cmd+shift+, to reload. Widget: reload Hammerspoon.\n"
           f"herdr: paste {DIST / name / 'herdr.toml'} into its config (no include there).")
     return 0
 
 
+def macos_mode() -> str:
+    """What macOS shows now: dark or light (read from its preferences plist, no subprocess)."""
+    try:
+        with (Path.home() / "Library/Preferences/.GlobalPreferences.plist").open("rb") as f:
+            return "dark" if plistlib.load(f).get("AppleInterfaceStyle") == "Dark" else "light"
+    except (OSError, plistlib.InvalidFileException, ValueError):
+        return "dark"
+
+
+def lightswitch(to: str | None) -> int:
+    """Flip every tool between dark and light (or pin one, or `auto` to follow macOS again)."""
+    if to is None:
+        now = current_mode()
+        to = "light" if (macos_mode() if now == "auto" else now) == "dark" else "dark"
+    return use(None, to)
+
+
 def listing() -> int:
     cur = current()
+    print(f"mode: {current_mode()} (kiln use --mode dark|light|auto)")
     for n in theme_files():
         t = load(n)
         mark = "●" if n == cur else " "
@@ -424,6 +462,11 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("list", help="themes, and which one is in use")
     u = sub.add_parser("use", help="switch theme (default: keep the current one and relink)")
     u.add_argument("name", nargs="?")
+    u.add_argument("--mode", choices=PINS, help="dark or light pins every tool to it; auto follows macOS "
+                   "(default: keep the last one)")
+    ls = sub.add_parser("lightswitch", help="flip every tool between dark and light")
+    ls.add_argument("to", nargs="?", choices=PINS, help="dark, light, or auto to follow macOS again "
+                    "(default: the other one)")
     i = sub.add_parser("import", help="make a theme from a Ghostty theme or an iTerm2 plist")
     i.add_argument("file", help="Ghostty theme file, .itermcolors, or iTerm2 preferences plist")
     i.add_argument("--light", help="a second file for the light mode")
@@ -435,7 +478,9 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "build":
         return build(a.check)
     if a.cmd == "use":
-        return use(a.name)
+        return use(a.name, a.mode)
+    if a.cmd == "lightswitch":
+        return lightswitch(a.to)
     if a.cmd == "import":
         return import_theme(a)
     return listing()
