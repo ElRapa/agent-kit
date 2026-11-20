@@ -49,6 +49,7 @@ Which skill to use in which situation is in [AGENTS.md](AGENTS.md), so every age
 | ponytail | default coding style: the smallest complete change, never cut validation or security | ponytail |
 | ponytail-review | review a change: bug, risk, scale, missing test, speed, lean | ponytail |
 | ponytail-audit | the same checks on a whole repo, ranked | ponytail |
+| ponytail-debt | every `shortcut:` comment as one ledger, so deferred work doesn't rot | ponytail |
 | change-by-change-review | split a big diff into logical units, judge each | own |
 | blast-radius | what a change breaks outside the diff, with one proven fact | pstack |
 | thermo-nuclear-code-quality-review | very strict structure review, only when asked | cursor-team-kit |
@@ -69,6 +70,17 @@ archify is the visual layer between agent and person: AGENTS.md turns on its pro
 mode, so plans, comparisons, reviews and diagnoses also come as one page with the conclusion first.
 It needs Node >= 18 and a local Chrome for its browser check. Its own update check is off
 (`ARCHIFY_UPDATE_CHECK_DISABLED=1`); updates come through `vendor.toml`.
+
+### The ponytail band (optional, Claude Code only)
+
+ponytail's own Claude Code plugin adds a band above the prompt (cost, tokens, agent time, code
+reuse and tests per task) and a local Board page of all tasks. To get them:
+`/plugin marketplace add DietrichGebert/ponytail`, then `/plugin install ponytail@ponytail`. The
+plugin brings its own copy of the ponytail skills (they show as `ponytail:…`) and a session hook
+that loads the same rules. That copy duplicates ours but is harmless, because both come from the
+same upstream. agent-kit stays the source for every other harness. If the two ever differ, update
+the pin in `vendor.toml`. The Board's data stays local in `~/.config/ponytail/band/`. Leave the
+plugin's webhook empty so nothing leaves the machine.
 
 ## Third-party skills (vendored)
 

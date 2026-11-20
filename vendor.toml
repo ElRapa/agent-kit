@@ -12,6 +12,7 @@ skills = [
   "skills/ponytail",        # default coding style: smallest complete change
   "skills/ponytail-review", # main review: bug, risk, scale, tests, speed, lean
   "skills/ponytail-audit",  # whole-repo review, ranked
+  "skills/ponytail-debt",   # ledger of `shortcut:` comments, so deferrals don't rot
 ]
 
 [[source]]
