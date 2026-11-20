@@ -1,37 +1,37 @@
 {
-  "name": "nowu",
+  "name": "kiln-nowu",
   "type": "custom",
   "background": {
-    "primary": "#0c0b0a",
+    "primary": "#070a14",
     "diff": {
-      "added": "#2d382a",
-      "removed": "#3e2825"
+      "added": "#25363a",
+      "removed": "#3b2a35"
     }
   },
   "text": {
-    "primary": "#ede7db",
-    "secondary": "#988f81",
-    "link": "#8fb4f2",
-    "accent": "#8bd8ea",
-    "response": "#ede7db"
+    "primary": "#eef1ff",
+    "secondary": "#6c6f7b",
+    "link": "#93b6ff",
+    "accent": "#a7a2ff",
+    "response": "#eef1ff"
   },
   "border": {
-    "default": "#2c2824"
+    "default": "#252831"
   },
   "status": {
-    "success": "#a3d69a",
-    "warning": "#f0cd8a",
-    "error": "#ef8f86"
+    "success": "#8fd3bf",
+    "warning": "#f2d48c",
+    "error": "#f29aab"
   },
   "ui": {
-    "comment": "#675f55",
-    "symbol": "#cbc4b6",
-    "active": "#8bd8ea",
-    "focus": "#8bd8ea",
+    "comment": "#464954",
+    "symbol": "#9fa2af",
+    "active": "#a7a2ff",
+    "focus": "#a7a2ff",
     "gradient": [
-      "#f0cd8a",
-      "#f2a5d2",
-      "#b29dfb"
+      "#6fd0e6",
+      "#93b6ff",
+      "#a7a2ff"
     ]
   }
 }

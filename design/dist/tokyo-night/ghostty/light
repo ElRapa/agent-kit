@@ -1,0 +1,23 @@
+# kiln theme tokyo-night (light), built by agent-kit/design/kiln.py
+palette = 0=#4c5a96
+palette = 1=#f52a65
+palette = 2=#587539
+palette = 3=#8c6c3e
+palette = 4=#2e7de9
+palette = 5=#9854f1
+palette = 6=#007197
+palette = 7=#c4c8da
+palette = 8=#6172b0
+palette = 9=#ef5e89
+palette = 10=#7e946a
+palette = 11=#a48d6d
+palette = 12=#6099e8
+palette = 13=#ac7cee
+palette = 14=#3f91ad
+palette = 15=#b4b9d2
+background = #e1e2e7
+foreground = #3760bf
+cursor-color = #9854f1
+cursor-text = #e1e2e7
+selection-background = #b7c1e3
+selection-foreground = #3760bf

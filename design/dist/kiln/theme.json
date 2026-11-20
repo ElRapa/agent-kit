@@ -1,6 +1,7 @@
 {
   "name": "kiln",
-  "about": "Shared look for every tool in this setup. Warm near-black, cream ink, mono type, one glow gradient. Edit this file, then run design/build.py.",
+  "label": "Kiln",
+  "about": "Warm near-black and cream ink; the accent fades like a sky after sunset. Made for this setup.",
   "font": {
     "mono": "\"JetBrains Mono\", ui-monospace, \"SF Mono\", Menlo, Consolas, monospace",
     "sans": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", sans-serif",
@@ -22,11 +23,6 @@
     "6": 32,
     "7": 48
   },
-  "glow": [
-    "cyan",
-    "violet",
-    "pink"
-  ],
   "semantic": {
     "accent": "violet",
     "info": "cyan",
@@ -35,24 +31,6 @@
     "err": "red",
     "link": "blue",
     "cursor": "violet"
-  },
-  "ansi": {
-    "black": "raised",
-    "red": "red",
-    "green": "green",
-    "yellow": "amber",
-    "blue": "blue",
-    "magenta": "violet",
-    "cyan": "cyan",
-    "white": "soft",
-    "bright_black": "faint",
-    "bright_white": "ink"
-  },
-  "ansi_light": {
-    "black": "soft",
-    "white": "raised",
-    "bright_black": "muted",
-    "bright_white": "line"
   },
   "glyphs": {
     "dot": "●",
@@ -77,20 +55,20 @@
       "muted": "#988f81",
       "faint": "#675f55",
       "cyan": "#8bd8ea",
-      "violet": "#b29dfb",
-      "pink": "#f2a5d2",
+      "violet": "#a99cf8",
+      "pink": "#eaa6d2",
       "amber": "#f0cd8a",
       "green": "#a3d69a",
       "red": "#ef8f86",
       "blue": "#8fb4f2",
       "selection": "#2e2937",
-      "accent": "#b29dfb",
+      "accent": "#a99cf8",
       "info": "#8bd8ea",
       "ok": "#a3d69a",
       "warn": "#f0cd8a",
       "err": "#ef8f86",
       "link": "#8fb4f2",
-      "cursor": "#b29dfb"
+      "cursor": "#a99cf8"
     },
     "light": {
       "bg": "#f7f3ec",
@@ -102,21 +80,85 @@
       "muted": "#6b6358",
       "faint": "#958c7f",
       "cyan": "#1d7a8c",
-      "violet": "#6549d0",
-      "pink": "#b0417b",
+      "violet": "#5b4bd0",
+      "pink": "#a8478a",
       "amber": "#8f620f",
       "green": "#3c7636",
       "red": "#b23f36",
       "blue": "#305c9c",
       "selection": "#ddd3ef",
-      "accent": "#6549d0",
+      "accent": "#5b4bd0",
       "info": "#1d7a8c",
       "ok": "#3c7636",
       "warn": "#8f620f",
       "err": "#b23f36",
       "link": "#305c9c",
-      "cursor": "#6549d0"
+      "cursor": "#5b4bd0"
     }
+  },
+  "raw": {
+    "dark": {
+      "bg": "#0c0b0a",
+      "surface": "#151311",
+      "raised": "#1e1b18",
+      "line": "#2c2824",
+      "ink": "#ede7db",
+      "soft": "#cbc4b6",
+      "muted": "#988f81",
+      "faint": "#675f55",
+      "cyan": "#8bd8ea",
+      "violet": "#a99cf8",
+      "pink": "#eaa6d2",
+      "amber": "#f0cd8a",
+      "green": "#a3d69a",
+      "red": "#ef8f86",
+      "blue": "#8fb4f2",
+      "selection": "#2e2937",
+      "accent": "#a99cf8",
+      "info": "#8bd8ea",
+      "ok": "#a3d69a",
+      "warn": "#f0cd8a",
+      "err": "#ef8f86",
+      "link": "#8fb4f2",
+      "cursor": "#a99cf8"
+    },
+    "light": {
+      "bg": "#f7f3ec",
+      "surface": "#efe9df",
+      "raised": "#e6dfd2",
+      "line": "#d8d0c2",
+      "ink": "#1b1814",
+      "soft": "#3d3730",
+      "muted": "#6b6358",
+      "faint": "#958c7f",
+      "cyan": "#1d7a8c",
+      "violet": "#5b4bd0",
+      "pink": "#a8478a",
+      "amber": "#8f620f",
+      "green": "#3c7636",
+      "red": "#b23f36",
+      "blue": "#305c9c",
+      "selection": "#ddd3ef",
+      "accent": "#5b4bd0",
+      "info": "#1d7a8c",
+      "ok": "#3c7636",
+      "warn": "#8f620f",
+      "err": "#b23f36",
+      "link": "#305c9c",
+      "cursor": "#5b4bd0"
+    }
+  },
+  "glow": {
+    "dark": [
+      "#6f86f2",
+      "#a99cf8",
+      "#eaa6d2"
+    ],
+    "light": [
+      "#3a55c4",
+      "#5b4bd0",
+      "#a8478a"
+    ]
   },
   "ansi16": {
     "dark": [
@@ -125,7 +167,7 @@
       "#a3d69a",
       "#f0cd8a",
       "#8fb4f2",
-      "#b29dfb",
+      "#a99cf8",
       "#8bd8ea",
       "#cbc4b6",
       "#675f55",
@@ -133,7 +175,7 @@
       "#b8dbac",
       "#efd4a1",
       "#a9c2ec",
-      "#c3b2f2",
+      "#bcb1f0",
       "#a6dce6",
       "#ede7db"
     ],
@@ -143,7 +185,7 @@
       "#3c7636",
       "#8f620f",
       "#305c9c",
-      "#6549d0",
+      "#5b4bd0",
       "#1d7a8c",
       "#e6dfd2",
       "#6b6358",
@@ -151,9 +193,10 @@
       "#709969",
       "#ac8b4d",
       "#6886b2",
-      "#8e79d8",
+      "#877ad8",
       "#5a9ca7",
       "#d8d0c2"
     ]
-  }
+  },
+  "translucent": null
 }

@@ -1,0 +1,56 @@
+{
+  "name": "gruvbox",
+  "label": "Gruvbox",
+  "about": "Retro warm contrast, dark and light. Popular for long sessions.",
+  "source": "github.com/morhetz/gruvbox (palette)",
+  "modes": {
+    "dark": {
+      "bg": "#282828",
+      "surface": "#1d2021",
+      "raised": "#3c3836",
+      "line": "#504945",
+      "ink": "#ebdbb2",
+      "soft": "#d5c4a1",
+      "muted": "#a89984",
+      "faint": "#7c6f64",
+      "cyan": "#8ec07c",
+      "violet": "#d3869b",
+      "pink": "#fe8019",
+      "amber": "#fabd2f",
+      "green": "#b8bb26",
+      "red": "#fb4934",
+      "blue": "#83a598",
+      "selection": "#504945"
+    },
+    "light": {
+      "bg": "#fbf1c7",
+      "surface": "#f2e5bc",
+      "raised": "#ebdbb2",
+      "line": "#d5c4a1",
+      "ink": "#3c3836",
+      "soft": "#504945",
+      "muted": "#7c6f64",
+      "faint": "#a89984",
+      "cyan": "#427b58",
+      "violet": "#8f3f71",
+      "pink": "#af3a03",
+      "amber": "#b57614",
+      "green": "#79740e",
+      "red": "#9d0006",
+      "blue": "#076678",
+      "selection": "#d5c4a1"
+    }
+  },
+  "glow": {
+    "dark": [
+      "#83a598",
+      "#d3869b",
+      "#fe8019"
+    ],
+    "light": [
+      "#076678",
+      "#8f3f71",
+      "#af3a03"
+    ]
+  }
+}

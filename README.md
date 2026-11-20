@@ -13,7 +13,7 @@ employer or customer names: those live in my private `my-setup/kit-private`.
 | `vendor.toml`, `scripts/vendor.py` | third-party skills, pinned, and the script that copies them | you, CI |
 | `install.sh` | installs this kit and the private kit for every harness | you, dotfiles |
 | `shell/auto-update.zsh` | daily background pull and reinstall | dotfiles `.zshrc` |
-| `design/` | kiln, the shared look: one `tokens.json` builds themes for Ghostty, herdr, starship, Gemini CLI, web pages and the widget ([design/README.md](design/README.md)) | `install.sh` (links `~/.config/kiln`), dotfiles, agent-stack, nowu |
+| `design/` | kiln, the shared look: five themes (kiln, nightsky, Tokyo Night, Catppuccin, Gruvbox), each building Ghostty, herdr, starship, Gemini CLI, page and widget files; `kiln use <theme>` switches, `kiln import` adds any Ghostty or iTerm2 theme ([design/README.md](design/README.md)) | `install.sh` (puts `kiln` on the PATH), dotfiles, agent-stack, nowu |
 
 ## Install and update
 
@@ -23,8 +23,8 @@ employer or customer names: those live in my private `my-setup/kit-private`.
 /plugin marketplace add ElRapa/agent-kit    # inside Claude Code, if you prefer plugins
 ```
 
-`install.sh` also links the kiln themes (`design/dist/kiln`) into `~/.config/kiln` and
-`~/.config/ghostty/themes`. It runs `npx skills add <folder> -g -y --skill '*'` (vercel-labs/skills, telemetry off),
+`install.sh` also puts `kiln` on the PATH and links the theme in use into `~/.config/kiln` and
+`~/.config/ghostty/themes` (`kiln use <theme>` switches). It runs `npx skills add <folder> -g -y --skill '*'` (vercel-labs/skills, telemetry off),
 then the `[[direct]]` packs from `vendor.toml` at their pinned commit. It copies every skill to
 `~/.agents/skills` and links each harness (Claude Code, Codex, opencode, Copilot, …) to that copy.
 dotfiles' `install.sh` calls it on a new machine.

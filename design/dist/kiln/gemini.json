@@ -1,5 +1,5 @@
 {
-  "name": "kiln",
+  "name": "kiln-kiln",
   "type": "custom",
   "background": {
     "primary": "#0c0b0a",
@@ -12,7 +12,7 @@
     "primary": "#ede7db",
     "secondary": "#988f81",
     "link": "#8fb4f2",
-    "accent": "#b29dfb",
+    "accent": "#a99cf8",
     "response": "#ede7db"
   },
   "border": {
@@ -26,12 +26,12 @@
   "ui": {
     "comment": "#675f55",
     "symbol": "#cbc4b6",
-    "active": "#b29dfb",
+    "active": "#a99cf8",
     "focus": "#8bd8ea",
     "gradient": [
-      "#8bd8ea",
-      "#b29dfb",
-      "#f2a5d2"
+      "#6f86f2",
+      "#a99cf8",
+      "#eaa6d2"
     ]
   }
 }

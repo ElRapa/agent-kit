@@ -14,5 +14,5 @@ jobs:
           for f in skills/*/SKILL.md; do
             grep -q '^name:' "$f" && grep -q '^description:' "$f" || { echo "missing frontmatter: $f"; exit 1; }
           done
-      - name: built themes match design/tokens.json
-        run: python3 design/build.py --check
+      - name: built themes match design/base.json and themes/
+        run: python3 design/kiln.py build --check

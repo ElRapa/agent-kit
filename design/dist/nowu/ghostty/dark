@@ -1,0 +1,25 @@
+# kiln theme nowu (dark), built by agent-kit/design/kiln.py
+palette = 0=#1d2029
+palette = 1=#f29aab
+palette = 2=#8fd3bf
+palette = 3=#f2d48c
+palette = 4=#93b6ff
+palette = 5=#a7a2ff
+palette = 6=#93b6ff
+palette = 7=#9fa2af
+palette = 8=#464954
+palette = 9=#f1b2c3
+palette = 10=#aadbd1
+palette = 11=#f1dcac
+palette = 12=#acc7ff
+palette = 13=#bbb8ff
+palette = 14=#acc7ff
+palette = 15=#eef1ff
+background = #070a14
+foreground = #eef1ff
+cursor-color = #a7a2ff
+cursor-text = #070a14
+selection-background = #252748
+selection-foreground = #eef1ff
+background-opacity = 0.86
+background-blur = 24

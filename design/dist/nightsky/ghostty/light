@@ -1,0 +1,25 @@
+# kiln theme nightsky (light), built by agent-kit/design/kiln.py
+palette = 0=#5a5d6e
+palette = 1=#b23d58
+palette = 2=#2b7663
+palette = 3=#94680f
+palette = 4=#3b5ec4
+palette = 5=#5a4fd6
+palette = 6=#3b5ec4
+palette = 7=#e1e2ea
+palette = 8=#898c99
+palette = 9=#c47085
+palette = 10=#63998d
+palette = 11=#af8f51
+palette = 12=#6f88d3
+palette = 13=#857de0
+palette = 14=#6f88d3
+palette = 15=#d7d8e1
+background = #f3f4fa
+foreground = #12162b
+cursor-color = #5a4fd6
+cursor-text = #f3f4fa
+selection-background = #d7d6f4
+selection-foreground = #12162b
+background-opacity = 0.86
+background-blur = 24

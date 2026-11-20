@@ -1,0 +1,56 @@
+{
+  "name": "catppuccin",
+  "label": "Catppuccin",
+  "about": "Mocha (dark) and Latte (light): soft pastels, the most used theme family today.",
+  "source": "github.com/catppuccin/catppuccin (palette)",
+  "modes": {
+    "dark": {
+      "bg": "#1e1e2e",
+      "surface": "#181825",
+      "raised": "#313244",
+      "line": "#45475a",
+      "ink": "#cdd6f4",
+      "soft": "#bac2de",
+      "muted": "#9399b2",
+      "faint": "#6c7086",
+      "cyan": "#89dceb",
+      "violet": "#cba6f7",
+      "pink": "#f5c2e7",
+      "amber": "#f9e2af",
+      "green": "#a6e3a1",
+      "red": "#f38ba8",
+      "blue": "#89b4fa",
+      "selection": "#3a3b51"
+    },
+    "light": {
+      "bg": "#eff1f5",
+      "surface": "#e6e9ef",
+      "raised": "#ccd0da",
+      "line": "#bcc0cc",
+      "ink": "#4c4f69",
+      "soft": "#5c5f77",
+      "muted": "#7c7f93",
+      "faint": "#9ca0b0",
+      "cyan": "#04a5e5",
+      "violet": "#8839ef",
+      "pink": "#ea76cb",
+      "amber": "#df8e1d",
+      "green": "#40a02b",
+      "red": "#d20f39",
+      "blue": "#1e66f5",
+      "selection": "#dcd6f0"
+    }
+  },
+  "glow": {
+    "dark": [
+      "#89b4fa",
+      "#b4befe",
+      "#cba6f7"
+    ],
+    "light": [
+      "#1e66f5",
+      "#7287fd",
+      "#8839ef"
+    ]
+  }
+}

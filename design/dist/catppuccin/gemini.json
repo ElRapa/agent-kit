@@ -1,0 +1,37 @@
+{
+  "name": "kiln-catppuccin",
+  "type": "custom",
+  "background": {
+    "primary": "#1e1e2e",
+    "diff": {
+      "added": "#3c4947",
+      "removed": "#4d3649"
+    }
+  },
+  "text": {
+    "primary": "#cdd6f4",
+    "secondary": "#9399b2",
+    "link": "#89b4fa",
+    "accent": "#cba6f7",
+    "response": "#cdd6f4"
+  },
+  "border": {
+    "default": "#45475a"
+  },
+  "status": {
+    "success": "#a6e3a1",
+    "warning": "#f9e2af",
+    "error": "#f38ba8"
+  },
+  "ui": {
+    "comment": "#6c7086",
+    "symbol": "#bac2de",
+    "active": "#cba6f7",
+    "focus": "#89dceb",
+    "gradient": [
+      "#89b4fa",
+      "#b4befe",
+      "#cba6f7"
+    ]
+  }
+}

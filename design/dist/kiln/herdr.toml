@@ -1,8 +1,8 @@
-# kiln for herdr (agent-kit/design/build.py): paste below your [theme] table.
+# kiln theme kiln for herdr (agent-kit/design/kiln.py): paste below your [theme] table.
 # [theme.custom] always applies; [theme.custom.light] only with theme.auto_switch = true.
 
 [theme.custom]
-accent = "#b29dfb"
+accent = "#a99cf8"
 panel_bg = "#0c0b0a"
 sidebar_bg = "#151311"
 active_row_bg = "#1e1b18"
@@ -14,16 +14,16 @@ overlay0 = "#675f55"
 overlay1 = "#988f81"
 text = "#ede7db"
 subtext0 = "#988f81"
-mauve = "#b29dfb"
+mauve = "#a99cf8"
 green = "#a3d69a"
 yellow = "#f0cd8a"
 red = "#ef8f86"
 blue = "#8fb4f2"
 teal = "#8bd8ea"
-peach = "#f2a5d2"
+peach = "#eaa6d2"
 
 [theme.custom.light]
-accent = "#6549d0"
+accent = "#5b4bd0"
 panel_bg = "#f7f3ec"
 sidebar_bg = "#efe9df"
 active_row_bg = "#e6dfd2"
@@ -35,10 +35,10 @@ overlay0 = "#958c7f"
 overlay1 = "#6b6358"
 text = "#1b1814"
 subtext0 = "#6b6358"
-mauve = "#6549d0"
+mauve = "#5b4bd0"
 green = "#3c7636"
 yellow = "#8f620f"
 red = "#b23f36"
 blue = "#305c9c"
 teal = "#1d7a8c"
-peach = "#b0417b"
+peach = "#a8478a"

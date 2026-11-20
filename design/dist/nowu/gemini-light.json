@@ -1,0 +1,37 @@
+{
+  "name": "kiln-nowu-light",
+  "type": "custom",
+  "background": {
+    "primary": "#f3f4fa",
+    "diff": {
+      "added": "#c7d8d9",
+      "removed": "#e5ccd6"
+    }
+  },
+  "text": {
+    "primary": "#12162b",
+    "secondary": "#898c99",
+    "link": "#3b5ec4",
+    "accent": "#5a4fd6",
+    "response": "#12162b"
+  },
+  "border": {
+    "default": "#d7d8e1"
+  },
+  "status": {
+    "success": "#2b7663",
+    "warning": "#94680f",
+    "error": "#b23d58"
+  },
+  "ui": {
+    "comment": "#abadb7",
+    "symbol": "#5a5d6e",
+    "active": "#5a4fd6",
+    "focus": "#5a4fd6",
+    "gradient": [
+      "#1d7a8c",
+      "#3b5ec4",
+      "#5a4fd6"
+    ]
+  }
+}

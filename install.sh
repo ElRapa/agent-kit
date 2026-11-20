@@ -12,12 +12,10 @@ SKILLS_CLI="skills@1.8.1"
 
 [ "${1:-}" = "--pull" ] && git -C "$KIT" pull --ff-only
 
-# Shared look (design/, kiln): link the built themes where tools look for them. Links, so a pull
-# updates them; a real file of yours at those paths is left alone.
-link() { [ -e "$2" ] && [ ! -L "$2" ] && { echo "skip $2: not a link" >&2; return; }; mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
-link "$KIT/design/dist/kiln" "${XDG_CONFIG_HOME:-$HOME/.config}/kiln"
-link "$KIT/design/dist/kiln/ghostty/kiln" "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/kiln"
-link "$KIT/design/dist/kiln/ghostty/kiln-light" "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/kiln-light"
+# Shared look (design/, kiln): `kiln` on the PATH, and ~/.config/kiln plus Ghostty's theme links
+# pointing at the theme in use (kiln the first time; `kiln use <theme>` switches).
+mkdir -p "$HOME/.local/bin" && ln -sfn "$KIT/design/kiln.py" "$HOME/.local/bin/kiln"
+python3 "$KIT/design/kiln.py" use >/dev/null || echo "skip: kiln themes not linked" >&2
 
 command -v npx >/dev/null || { echo "needs node (brew install node)" >&2; exit 1; }
 

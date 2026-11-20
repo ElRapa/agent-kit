@@ -1,6 +1,7 @@
 {
   "name": "nowu",
-  "about": "Example variant: kiln with a cyan accent and a warmer glow, for nowu's pages and tools.",
-  "semantic": { "accent": "cyan", "info": "blue", "cursor": "cyan" },
-  "glow": ["amber", "pink", "violet"]
+  "extends": "nightsky",
+  "label": "nowu",
+  "about": "Example variant: the night sky theme with a cyan-led glow, for nowu's pages and tools. Only the keys that differ.",
+  "glow": { "dark": ["#6fd0e6", "#93b6ff", "#a7a2ff"], "light": ["#1d7a8c", "#3b5ec4", "#5a4fd6"] }
 }

@@ -1,0 +1,61 @@
+# kiln theme gruvbox for starship (agent-kit/design/kiln.py). Copy to ~/.config/starship.toml,
+# or keep yours and take only [palettes.kiln] and `palette`.
+palette = "kiln"
+format = "$directory$git_branch$git_status$python$nodejs$env_var$cmd_duration$line_break$character"
+
+[directory]
+style = "bold ink"
+truncation_length = 3
+
+[git_branch]
+format = "[· $branch]($style) "
+style = "muted"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "warn"
+
+[python]
+format = "[· py $version]($style) "
+style = "faint"
+
+[nodejs]
+format = "[· node $version]($style) "
+style = "faint"
+
+[env_var.AP_PROFILE]
+format = "[● $env_value]($style) "
+style = "bold accent"
+
+[cmd_duration]
+format = "[· $duration]($style) "
+style = "faint"
+
+[character]
+success_symbol = "[›](bold accent)"
+error_symbol = "[›](bold err)"
+
+[palettes.kiln]
+bg = "#282828"
+surface = "#1d2021"
+raised = "#3c3836"
+line = "#504945"
+ink = "#ebdbb2"
+soft = "#d5c4a1"
+muted = "#a89984"
+faint = "#7c6f64"
+cyan = "#8ec07c"
+violet = "#d3869b"
+pink = "#fe8019"
+amber = "#fabd2f"
+green = "#b8bb26"
+red = "#fb4934"
+blue = "#83a598"
+selection = "#504945"
+accent = "#d3869b"
+info = "#8ec07c"
+ok = "#b8bb26"
+warn = "#fabd2f"
+err = "#fb4934"
+link = "#83a598"
+cursor = "#d3869b"

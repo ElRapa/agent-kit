@@ -1,0 +1,70 @@
+{
+  "name": "nightsky",
+  "label": "Night sky",
+  "about": "Deep night blue, starlight ink in alpha steps, one twilight accent that fades from blue to violet to dusk. Translucent surfaces, few colours.",
+  "translucent": {
+    "opacity": 0.86,
+    "blur": 24
+  },
+  "sky": {
+    "dark": "linear-gradient(180deg, #04060d 0%, #080c1c 55%, #151231 100%)",
+    "light": "linear-gradient(180deg, #eef1fb 0%, #f3f2fa 60%, #f8eef4 100%)"
+  },
+  "modes": {
+    "dark": {
+      "bg": "#070a14",
+      "surface": "#ffffff0d",
+      "raised": "#ffffff17",
+      "line": "#ffffff1f",
+      "ink": "#eef1ff",
+      "soft": "#eef1ffa8",
+      "muted": "#eef1ff70",
+      "faint": "#eef1ff45",
+      "cyan": "#93b6ff",
+      "violet": "#a7a2ff",
+      "pink": "#dba8f2",
+      "amber": "#f2d48c",
+      "green": "#8fd3bf",
+      "red": "#f29aab",
+      "blue": "#93b6ff",
+      "selection": "#8f8cff38"
+    },
+    "light": {
+      "bg": "#f3f4fa",
+      "surface": "#0b10300a",
+      "raised": "#0b103014",
+      "line": "#0b10301f",
+      "ink": "#12162b",
+      "soft": "#12162bad",
+      "muted": "#12162b78",
+      "faint": "#12162b52",
+      "cyan": "#3b5ec4",
+      "violet": "#5a4fd6",
+      "pink": "#9b4c9e",
+      "amber": "#94680f",
+      "green": "#2b7663",
+      "red": "#b23d58",
+      "blue": "#3b5ec4",
+      "selection": "#5a4fd62e"
+    }
+  },
+  "glow": {
+    "dark": [
+      "#5d7bfa",
+      "#a28bf7",
+      "#e7a3d6"
+    ],
+    "light": [
+      "#3b5ec4",
+      "#5a4fd6",
+      "#9b4c9e"
+    ]
+  },
+  "semantic": {
+    "info": "violet",
+    "link": "blue"
+  },
+  "ansi": {
+    "cyan": "blue"
+  }
+}

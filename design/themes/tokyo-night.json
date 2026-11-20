@@ -1,0 +1,56 @@
+{
+  "name": "tokyo-night",
+  "label": "Tokyo Night",
+  "about": "The theme your Ghostty and herdr used. Night and Day variants.",
+  "source": "github.com/folke/tokyonight.nvim (palette)",
+  "modes": {
+    "dark": {
+      "bg": "#1a1b26",
+      "surface": "#16161e",
+      "raised": "#292e42",
+      "line": "#3b4261",
+      "ink": "#c0caf5",
+      "soft": "#a9b1d6",
+      "muted": "#737aa2",
+      "faint": "#565f89",
+      "cyan": "#7dcfff",
+      "violet": "#bb9af7",
+      "pink": "#ff9e64",
+      "amber": "#e0af68",
+      "green": "#9ece6a",
+      "red": "#f7768e",
+      "blue": "#7aa2f7",
+      "selection": "#283457"
+    },
+    "light": {
+      "bg": "#e1e2e7",
+      "surface": "#d5d6db",
+      "raised": "#c4c8da",
+      "line": "#b4b9d2",
+      "ink": "#3760bf",
+      "soft": "#4c5a96",
+      "muted": "#6172b0",
+      "faint": "#8990b3",
+      "cyan": "#007197",
+      "violet": "#9854f1",
+      "pink": "#b15c00",
+      "amber": "#8c6c3e",
+      "green": "#587539",
+      "red": "#f52a65",
+      "blue": "#2e7de9",
+      "selection": "#b7c1e3"
+    }
+  },
+  "glow": {
+    "dark": [
+      "#7aa2f7",
+      "#9d7cd8",
+      "#bb9af7"
+    ],
+    "light": [
+      "#2e7de9",
+      "#7847bd",
+      "#9854f1"
+    ]
+  }
+}
