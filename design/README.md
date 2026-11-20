@@ -7,6 +7,8 @@ Gallery of all themes: open `dist/gallery.html`.
 ```bash
 kiln list                          # themes; ● marks the one in use
 kiln use nightsky                  # switch (Ghostty: cmd+shift+, ; widget: reload Hammerspoon)
+kiln lightswitch                   # flip every tool between dark and light (lightswitch auto: follow macOS)
+kiln use --mode dark               # same, as part of a switch: always dark (or light, or auto)
 kiln import <file> --name dracula  # a Ghostty theme or an iTerm2 .itermcolors/preferences plist
 kiln build                         # after editing base.json or a theme; --check in CI
 ```
@@ -24,7 +26,9 @@ kiln build                         # after editing base.json or a theme; --check
 | `catppuccin` | Mocha and Latte |
 | `gruvbox` | dark and light |
 
-Each has a dark and a light palette, so it follows macOS. `variants/nowu.json` shows a project
+Each has a dark and a light palette, so it follows macOS. `kiln lightswitch` (or `kiln use --mode dark|light`)
+pins every tool to one mode: it points both Ghostty `kiln-current` names at that palette and writes
+`~/.config/kiln-mode`, which `ap` and the widget read; `--mode auto` follows macOS again. `variants/nowu.json` shows a project
 variant: it `extends` nightsky and changes only the glow.
 
 ## How it is built
