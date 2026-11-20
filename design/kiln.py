@@ -321,6 +321,58 @@ def link(src: Path, dst: Path) -> None:
     dst.symlink_to(src)
 
 
+HERDR_BEGIN = "# >>> kiln: `kiln use` and `kiln lightswitch` rewrite this block >>>"
+HERDR_END = "# <<< kiln <<<"
+
+
+def herdr_block(t: dict[str, Any], mode: str) -> str:
+    """herdr's [theme] tables for a theme and mode; herdr has no include, so kiln writes them in place."""
+    lines = [HERDR_BEGIN, "[theme]", 'name = "tokyo-night"   # base only; kiln overrides every colour token',
+             f"auto_switch = {'true' if mode == 'auto' else 'false'}",
+             'dark_name = "tokyo-night"', 'light_name = "tokyo-night"']
+    tables = [("theme.custom", "light" if mode == "light" else "dark")]
+    if mode == "auto":
+        tables.append(("theme.custom.light", "light"))
+    for table, m in tables:
+        c = resolve(t, m)
+        lines += ["", f"[{table}]"] + [f'{key} = "{c[name]}"' for key, name in HERDR.items()]
+    return "\n".join(lines + [HERDR_END])
+
+
+def write_herdr(name: str, mode: str) -> str | None:
+    """Rewrite the kiln block in herdr's config (through the dotfiles link); None if there is none."""
+    path = Path(os.environ.get("HERDR_CONFIG_PATH") or CONFIG / "herdr" / "config.toml")
+    try:
+        text = path.read_text()
+    except OSError:
+        return None
+    if HERDR_BEGIN not in text or HERDR_END not in text:
+        return f"herdr: no kiln block in {path}; paste {DIST / name / 'herdr.toml'} by hand"
+    head, rest = text.split(HERDR_BEGIN, 1)
+    tail = rest.split(HERDR_END, 1)[1]
+    new = head + herdr_block(load(name), mode) + tail
+    if new != text:
+        path.resolve().write_text(new)
+    return "herdr: theme written; herdr picks it up on prefix+shift+r (reload config)"
+
+
+def write_opencode(mode: str) -> str | None:
+    """opencode's `system` theme draws with the terminal's palette, which is the kiln theme in Ghostty."""
+    folder = CONFIG / "opencode"
+    if not folder.is_dir():
+        return None
+    path = folder / "cli.json"
+    try:
+        data = json.loads(path.read_text()) if path.exists() else {}
+    except ValueError:
+        return f"opencode: {path} is not valid JSON; left alone"
+    want = {"name": "system", "mode": "system" if mode == "auto" else mode}
+    if data.get("theme") != want:
+        data["theme"] = want
+        path.write_text(json.dumps(data, indent=2) + "\n")
+    return "opencode: system theme (the terminal's kiln colours); restart opencode"
+
+
 def current() -> str | None:
     p = CONFIG / "kiln"
     return p.resolve().name if p.is_symlink() else None
@@ -360,8 +412,10 @@ def use(name: str | None, mode: str | None = None) -> int:
             link(DIST / t / "ghostty" / "dark", themes / base)
             link(DIST / t / "ghostty" / "light", themes / f"{base}-light")
     shown = "follows macOS" if mode == "auto" else f"always {mode}"
-    print(f"kiln: using {name}, {shown}. Ghostty: cmd+shift+, to reload. Widget: reload Hammerspoon.\n"
-          f"herdr: paste {DIST / name / 'herdr.toml'} into its config (no include there).")
+    print(f"kiln: using {name}, {shown}. Ghostty: cmd+shift+, to reload. Widget: reload Hammerspoon.")
+    for note in (write_herdr(name, mode), write_opencode(mode)):
+        if note:
+            print(note)
     return 0
 
 
@@ -437,13 +491,65 @@ def palette(s: dict[str, Any]) -> dict[str, str]:
     }
 
 
+GHOSTTY_THEMES = (Path("/Applications/Ghostty.app/Contents/Resources/ghostty/themes"),
+                  Path("/usr/share/ghostty/themes"), CONFIG / "ghostty" / "themes")
+ITERM_PREFS = Path.home() / "Library/Preferences/com.googlecode.iterm2.plist"
+
+
+def installed() -> dict[str, Path]:
+    """Ghostty themes on this machine (bundled and your own), by name; kiln's own links left out."""
+    found: dict[str, Path] = {}
+    for d in GHOSTTY_THEMES:
+        if d.is_dir():
+            for f in sorted(d.iterdir()):
+                if f.is_file() and not f.name.startswith("kiln"):
+                    found.setdefault(f.name, f)
+    return found
+
+
+def find_scheme(ref: str) -> Path:
+    """A file path, an installed Ghostty theme name (any case), or `iterm` for iTerm2's preferences."""
+    path = Path(ref).expanduser()
+    if path.is_file():
+        return path
+    if ref.lower() == "iterm" and ITERM_PREFS.is_file():
+        return ITERM_PREFS
+    by_lower = {n.lower(): p for n, p in installed().items()}
+    if ref.lower() in by_lower:
+        return by_lower[ref.lower()]
+    raise SystemExit(f"kiln: no file or installed theme {ref!r}; kiln installed lists them")
+
+
+def list_installed() -> int:
+    names = list(installed())
+    print(f"{len(names)} Ghostty themes on this machine (kiln import \"<name>\" --name x):")
+    for n in names:
+        print(f"  {n}")
+    if ITERM_PREFS.is_file():
+        profiles = [b.get("Name") for b in plistlib.loads(ITERM_PREFS.read_bytes()).get("New Bookmarks", [])]
+        print("iTerm2 profiles (kiln import iterm --profile \"<name>\" --name x): " + ", ".join(map(str, profiles)))
+    return 0
+
+
+def gallery() -> int:
+    page = DIST / "gallery.html"
+    print(page)
+    if sys.platform == "darwin" and sys.stdout.isatty():
+        os.system(f"open '{page}'")
+    return 0
+
+
 def import_theme(args: argparse.Namespace) -> int:
+    args.file = str(find_scheme(args.file))
+    if args.light:
+        args.light = str(find_scheme(args.light))
     first = palette(read_scheme(Path(args.file).expanduser(), args.profile))
     modes = {"dark" if luminance(first["bg"]) < 0.5 else "light": first}
     if args.light:
         modes["light"] = palette(read_scheme(Path(args.light).expanduser(), args.profile))
+    only = next(iter(modes.values()))
     for m in MODES:  # a theme with one mode uses it for both
-        modes.setdefault(m, modes["light" if m == "dark" else "dark"])
+        modes.setdefault(m, only)
     theme = {"name": args.name, "label": args.label or args.name, "about": f"Imported from {Path(args.file).name}.",
              "modes": modes, "glow": {m: [modes[m]["blue"], modes[m]["violet"], modes[m]["pink"]] for m in MODES}}
     out = HERE / "themes" / f"{args.name}.json"
@@ -467,9 +573,12 @@ def main(argv: list[str] | None = None) -> int:
     ls = sub.add_parser("lightswitch", help="flip every tool between dark and light")
     ls.add_argument("to", nargs="?", choices=PINS, help="dark, light, or auto to follow macOS again "
                     "(default: the other one)")
-    i = sub.add_parser("import", help="make a theme from a Ghostty theme or an iTerm2 plist")
-    i.add_argument("file", help="Ghostty theme file, .itermcolors, or iTerm2 preferences plist")
-    i.add_argument("--light", help="a second file for the light mode")
+    sub.add_parser("installed", help="Ghostty themes and iTerm2 profiles on this machine, to import")
+    sub.add_parser("gallery", help="open the page with every theme, dark and light")
+    i = sub.add_parser("import", help="make a theme from an installed Ghostty theme, a file, or iTerm2")
+    i.add_argument("file", help="installed Ghostty theme name (kiln installed), a Ghostty theme file, "
+                   ".itermcolors, an iTerm2 preferences plist, or `iterm` for yours")
+    i.add_argument("--light", help="a second theme (name or file) for the light mode")
     i.add_argument("--name", required=True, help="theme name, e.g. dracula")
     i.add_argument("--label", help="display name")
     i.add_argument("--profile", help="iTerm2 preferences: profile name (default: the first)")
@@ -479,6 +588,10 @@ def main(argv: list[str] | None = None) -> int:
         return build(a.check)
     if a.cmd == "use":
         return use(a.name, a.mode)
+    if a.cmd == "installed":
+        return list_installed()
+    if a.cmd == "gallery":
+        return gallery()
     if a.cmd == "lightswitch":
         return lightswitch(a.to)
     if a.cmd == "import":
