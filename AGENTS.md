@@ -12,7 +12,8 @@ Rules for every project and every harness. Projects add their own AGENTS.md on t
   AGENTS.md for agents.
 - Look: pages, reports and terminal output you build for the owner use the kiln theme in use
   (`~/.config/kiln/tokens.css` and `components.css`, colours by role, the glow sparingly) unless the
-  project has its own.
+  project has its own. CLI output, installers and pickers follow `~/code/agent-kit/design/STYLE.md`
+  (shell scripts source `design/kiln.sh`).
 
 ## Skills: which one when
 

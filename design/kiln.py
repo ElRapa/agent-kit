@@ -21,7 +21,7 @@ import os
 import plistlib
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, ClassVar
 
 HERE = Path(__file__).resolve().parent
 DIST = HERE / "dist"
@@ -36,6 +36,84 @@ HERDR = {  # herdr theme.custom token -> colour name
     "overlay0": "faint", "overlay1": "muted", "text": "ink", "subtext0": "muted", "mauve": "violet",
     "green": "green", "yellow": "amber", "red": "red", "blue": "blue", "teal": "cyan", "peach": "pink",
 }
+
+
+# --- terminal output in the kiln look (design/STYLE.md) ------------------------------------------
+
+class UI:
+    """kiln's own output: ANSI roles, ● ✓ ! ✗ → glyphs, the glow of the theme in use in truecolor.
+
+    Off with NO_COLOR, TERM=dumb or a pipe (FORCE_COLOR turns it on); ASCII glyphs when the stream
+    cannot encode them. Same rules as `ap` (agent-stack ui.Style) and design/kiln.sh."""
+
+    CODES: ClassVar[dict[str, str]] = {"bold": "1", "faint": "90", "accent": "35", "info": "36", "ok": "32", "warn": "33", "err": "31"}
+    GLYPHS: ClassVar[dict[str, tuple[str, str]]] = {"dot": ("●", "*"), "ok": ("✓", "ok"), "warn": ("!", "!"), "err": ("✗", "x"), "arrow": ("→", "->"),
+              "sep": ("·", "-")}
+
+    def __init__(self, stream: Any = None) -> None:
+        self.stream = stream or sys.stdout
+        if os.environ.get("NO_COLOR"):
+            self.color = False
+        elif os.environ.get("FORCE_COLOR") or os.environ.get("CLICOLOR_FORCE"):
+            self.color = True
+        else:
+            self.color = os.environ.get("TERM") != "dumb" and hasattr(self.stream, "isatty") and self.stream.isatty()
+        try:
+            "●✓✗→·".encode(getattr(self.stream, "encoding", None) or "ascii")
+            self.unicode = True
+        except (UnicodeEncodeError, LookupError):
+            self.unicode = False
+        self.glow: list[tuple[int, int, int]] = []
+
+    def use_glow(self, stops: list[str]) -> None:
+        if self.color and os.environ.get("COLORTERM", "").lower() in ("truecolor", "24bit"):
+            self.glow = [rgba(x)[:3] for x in stops]
+
+    def c(self, text: str, *roles: str) -> str:
+        if not self.color or not text or not roles:
+            return text
+        return f"\033[{';'.join(self.CODES[r] for r in roles)}m{text}\033[0m"
+
+    def g(self, name: str) -> str:
+        u, a = self.GLYPHS[name]
+        return u if self.unicode else a
+
+    def fade(self, text: str, start: float = 0.0, end: float = 1.0) -> str:
+        if not self.color or not text:
+            return text
+        if len(self.glow) < 2:
+            return self.c(text, "bold", "accent")
+        out = []
+        for i, ch in enumerate(text):
+            t = (start + (end - start) * i / max(1, len(text) - 1)) * (len(self.glow) - 1)
+            j = min(int(t), len(self.glow) - 2)
+            a, b = self.glow[j], self.glow[j + 1]
+            r, g, bl = (round(x + (y - x) * (t - j)) for x, y in zip(a, b, strict=True))
+            out.append(f"\033[38;2;{r};{g};{bl}m{ch}")
+        return "\033[1m" + "".join(out) + "\033[0m"
+
+    def title(self, name: str, tagline: str = "") -> None:
+        print(f"\n  {self.fade(self.g('dot'), 0, 0)} {self.fade(name)}  {self.c(tagline, 'faint')}\n", file=self.stream)
+
+    def line(self, role: str, what: str, detail: str = "", tool: str = "", width: int = 9) -> None:
+        glyph = {"ok": "ok", "warn": "warn", "err": "err", "info": "arrow"}[role]
+        head = self.c(f"{tool:<{width}}", "bold") + " " if tool else ""
+        tail = "  " + self.c(detail, "faint") if detail else ""
+        print(f"  {self.c(self.g(glyph), 'accent' if role == 'info' else role)} {head}{what}{tail}", file=self.stream)
+
+
+def _ui(stream: Any = None) -> UI:
+    ui = UI(stream)
+    cur = CONFIG / "kiln" / "theme.json"
+    try:
+        data = json.loads(cur.read_text())
+        mode = current_mode()
+        if mode == "auto":
+            mode = macos_mode()
+        ui.use_glow(data["glow"][mode])
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    return ui
 
 
 # --- colour helpers -----------------------------------------------------------------------------
@@ -250,6 +328,16 @@ def lua(t: dict[str, Any]) -> str:
     return "\n".join(out) + "\n"
 
 
+def shell(t: dict[str, Any]) -> str:
+    """The glow for shell scripts (design/kiln.sh reads ~/.config/kiln/theme.sh), alpha blended."""
+    out = [f"# kiln theme {t['name']} for shell scripts (design/kiln.sh), built by agent-kit/design/kiln.py.",
+           f"KILN_THEME={t['name']}"]
+    for mode in MODES:
+        bg = resolve(t, mode)["bg"]
+        out.append(f'KILN_GLOW_{mode.upper()}="{" ".join(flat(s, bg) for s in glow(t, mode))}"')
+    return "\n".join(out) + "\n"
+
+
 def flat_json(t: dict[str, Any]) -> str:
     out = {k: t[k] for k in ("name", "label", "about", "font", "radius", "space", "semantic", "glyphs") if k in t}
     out["colors"] = {m: resolve(t, m) for m in MODES}
@@ -277,7 +365,7 @@ def outputs(t: dict[str, Any]) -> dict[str, str]:
         "ghostty/dark": ghostty(t, "dark"), "ghostty/light": ghostty(t, "light"),
         "herdr.toml": herdr(t), "starship.toml": starship(t),
         "gemini.json": gemini(t, "dark"), "gemini-light.json": gemini(t, "light"),
-        "theme.lua": lua(t), "theme.json": flat_json(t), "preview.html": preview([t], t["name"]),
+        "theme.lua": lua(t), "theme.sh": shell(t), "theme.json": flat_json(t), "preview.html": preview([t], t["name"]),
     }
 
 
@@ -296,7 +384,8 @@ def build(check: bool = False) -> int:
         known = set(want)
         extra = [str(p.relative_to(HERE)) for p in DIST.rglob("*") if p.is_file() and p not in known]
         if stale or extra:
-            print("kiln: dist/ is stale, run design/kiln.py build:\n  " + "\n  ".join(stale + extra))
+            _ui(sys.stderr).line("err", "dist/ is stale", "run: design/kiln.py build")
+            print("    " + "\n    ".join(stale + extra), file=sys.stderr)
             return 1
         return 0
     for p, text in want.items():
@@ -305,7 +394,7 @@ def build(check: bool = False) -> int:
     for p in DIST.rglob("*"):  # drop files of removed themes
         if p.is_file() and p not in want:
             p.unlink()
-    print(f"kiln: built {len(themes)} themes into {DIST.relative_to(HERE.parent)}")
+    _ui().line("ok", f"built {len(themes)} themes", str(DIST.relative_to(HERE.parent)))
     return 0
 
 
@@ -313,7 +402,7 @@ def build(check: bool = False) -> int:
 
 def link(src: Path, dst: Path) -> None:
     if dst.exists() and not dst.is_symlink():
-        print(f"kiln: skip {dst}: a real file, not a link", file=sys.stderr)
+        _ui(sys.stderr).line("warn", f"skipped {dst}", "a real file, not a link; move it away and run kiln use")
         return
     dst.parent.mkdir(parents=True, exist_ok=True)
     if dst.is_symlink():
@@ -339,7 +428,10 @@ def herdr_block(t: dict[str, Any], mode: str) -> str:
     return "\n".join(lines + [HERDR_END])
 
 
-def write_herdr(name: str, mode: str) -> str | None:
+Note = tuple[str, str, str, str]  # role (ok, warn), tool, what happened, how to pick it up
+
+
+def write_herdr(name: str, mode: str) -> Note | None:
     """Rewrite the kiln block in herdr's config (through the dotfiles link); None if there is none."""
     path = Path(os.environ.get("HERDR_CONFIG_PATH") or CONFIG / "herdr" / "config.toml")
     try:
@@ -347,16 +439,16 @@ def write_herdr(name: str, mode: str) -> str | None:
     except OSError:
         return None
     if HERDR_BEGIN not in text or HERDR_END not in text:
-        return f"herdr: no kiln block in {path}; paste {DIST / name / 'herdr.toml'} by hand"
+        return ("warn", "herdr", f"no kiln block in {path}", f"paste {DIST / name / 'herdr.toml'} by hand")
     head, rest = text.split(HERDR_BEGIN, 1)
     tail = rest.split(HERDR_END, 1)[1]
     new = head + herdr_block(load(name), mode) + tail
     if new != text:
         path.resolve().write_text(new)
-    return "herdr: theme written; herdr picks it up on prefix+shift+r (reload config)"
+    return ("ok", "herdr", "theme written", "prefix+shift+r reloads it")
 
 
-def write_opencode(mode: str) -> str | None:
+def write_opencode(mode: str) -> Note | None:
     """opencode's `system` theme draws with the terminal's palette, which is the kiln theme in Ghostty."""
     folder = CONFIG / "opencode"
     if not folder.is_dir():
@@ -365,12 +457,12 @@ def write_opencode(mode: str) -> str | None:
     try:
         data = json.loads(path.read_text()) if path.exists() else {}
     except ValueError:
-        return f"opencode: {path} is not valid JSON; left alone"
+        return ("warn", "opencode", f"{path} is not valid JSON", "left alone")
     want = {"name": "system", "mode": "system" if mode == "auto" else mode}
     if data.get("theme") != want:
         data["theme"] = want
         path.write_text(json.dumps(data, indent=2) + "\n")
-    return "opencode: system theme (the terminal's kiln colours); restart opencode"
+    return ("ok", "opencode", "system theme, draws with the terminal's kiln colours", "restart opencode")
 
 
 def current() -> str | None:
@@ -412,10 +504,15 @@ def use(name: str | None, mode: str | None = None) -> int:
             link(DIST / t / "ghostty" / "dark", themes / base)
             link(DIST / t / "ghostty" / "light", themes / f"{base}-light")
     shown = "follows macOS" if mode == "auto" else f"always {mode}"
-    print(f"kiln: using {name}, {shown}. Ghostty: cmd+shift+, to reload. Widget: reload Hammerspoon.")
+    ui = _ui()
+    ui.title("kiln", f"{name} {ui.g('sep')} {shown}")
+    ui.line("ok", "theme linked", "cmd+shift+, reloads it", tool="Ghostty")
     for note in (write_herdr(name, mode), write_opencode(mode)):
         if note:
-            print(note)
+            ui.line(note[0], note[2], note[3], tool=note[1])
+    ui.line("ok", "follow it now", tool="ap, pages")
+    ui.line("info", "reload Hammerspoon", "it reads the theme when it starts", tool="widget")
+    print(file=ui.stream)
     return 0
 
 
@@ -438,12 +535,20 @@ def lightswitch(to: str | None) -> int:
 
 def listing() -> int:
     cur = current()
-    print(f"mode: {current_mode()} (kiln use --mode dark|light|auto)")
+    ui = _ui()
+    mode = current_mode()
+    ui.title("kiln", f"themes {ui.g('sep')} " + ("follow macOS" if mode == "auto" else f"always {mode}"))
     for n in theme_files():
         t = load(n)
-        mark = "●" if n == cur else " "
+        mark = ui.fade(ui.g("dot"), 0.5, 0.5) if n == cur else " "
         kind = " (variant of " + json.loads(theme_files()[n].read_text())["extends"] + ")" if t["kind"] == "variant" else ""
-        print(f"{mark} {n:14} {t.get('about', '')}{kind}")
+        name = ui.fade(f"{n:14}") if n == cur else ui.c(f"{n:14}", "bold")
+        print(f"  {mark} {name} {ui.c(t.get('about', '') + kind, 'faint')}")
+    print()
+    for cmd, what in (("kiln use <theme>", "switch"), ("kiln lightswitch", "dark or light everywhere"),
+                      ("kiln gallery", "every theme on one page")):
+        ui.line("info", ui.c(f"{cmd:<17}", "bold"), what)
+    print()
     return 0
 
 
@@ -522,12 +627,16 @@ def find_scheme(ref: str) -> Path:
 
 def list_installed() -> int:
     names = list(installed())
-    print(f"{len(names)} Ghostty themes on this machine (kiln import \"<name>\" --name x):")
+    ui = _ui()
+    ui.title("kiln", f"{len(names)} Ghostty themes on this machine")
     for n in names:
-        print(f"  {n}")
+        print(f"  {ui.c(ui.g('sep'), 'faint')} {n}")
+    print()
+    ui.line("info", ui.c('kiln import "<name>" --name x', "bold"), "make a kiln theme from one")
     if ITERM_PREFS.is_file():
         profiles = [b.get("Name") for b in plistlib.loads(ITERM_PREFS.read_bytes()).get("New Bookmarks", [])]
-        print("iTerm2 profiles (kiln import iterm --profile \"<name>\" --name x): " + ", ".join(map(str, profiles)))
+        ui.line("info", ui.c('kiln import iterm --profile "<name>" --name x', "bold"),
+                "iTerm2 profiles: " + ", ".join(map(str, profiles)))
     return 0
 
 
@@ -556,7 +665,7 @@ def import_theme(args: argparse.Namespace) -> int:
     if out.exists() and not args.force:
         raise SystemExit(f"kiln: {out.name} exists; --force replaces it")
     out.write_text(json.dumps(theme, indent=2) + "\n")
-    print(f"kiln: wrote themes/{out.name}; edit its glow and roles if you like")
+    _ui().line("ok", f"wrote themes/{out.name}", "edit its glow and roles if you like")
     return build()
 
 
@@ -599,5 +708,18 @@ def main(argv: list[str] | None = None) -> int:
     return listing()
 
 
+def run() -> int:
+    """main() with errors in the kiln look: one ✗ line on stderr, exit 1."""
+    try:
+        return main()
+    except BrokenPipeError:  # kiln list | head
+        return 0
+    except SystemExit as e:
+        if isinstance(e.code, str):
+            _ui(sys.stderr).line("err", e.code.removeprefix("kiln: "))
+            return 1
+        return e.code if isinstance(e.code, int) else 0
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(run())
