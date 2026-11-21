@@ -56,12 +56,17 @@ variant: it `extends` nightsky and changes only the glow.
 | `gemini.json`, `gemini-light.json` | Gemini CLI | `"ui": { "theme": "<full path to ~/.config/kiln/gemini.json>" }` (Gemini loads theme files only below your home folder) |
 | `tokens.css`, `components.css` | pages, reports, nowu | link or inline; classes start with `k-`, `.k-fade` gives text the glow |
 | `theme.lua` | Hammerspoon widget | read from `~/.config/kiln/theme.lua` |
+| `theme.sh` | shell scripts | `design/kiln.sh` reads the glow from `~/.config/kiln/theme.sh` |
 | `theme.json` | `ap` and anything else | resolved colours, glow, 16 ANSI colours per mode |
 
 `~/.config/kiln` is a link to `dist/<theme in use>`, so a pull updates what reads from there.
 
 `ap` and the pure prompt colour by ANSI slot (the terminal theme decides). In a truecolor terminal,
 `ap` also fades its highlights through the theme's glow.
+
+Shell scripts get the look from `design/kiln.sh` (bash 3.2 and zsh): titles, steps, ✓ ! ✗ lines,
+`→` hints, a spinner (`k_run`) and a checklist picker (`k_pick`). How to use all of it when you build
+something: [STYLE.md](STYLE.md).
 
 Rules: roles, not raw colours, in tools; the glow once or twice per screen; no colour for decoration;
 dark and light both work. Commit `dist/`: other repos read it without running Python.

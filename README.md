@@ -14,15 +14,16 @@ employer or customer names: those live in my private `my-setup/kit-private`.
 | `agents/opencode/*.md` | subagents in opencode format | opencode, OmO |
 | `.claude-plugin/` | the same skills as a Claude Code plugin marketplace | Claude Code `/plugin` |
 | `vendor.toml`, `scripts/vendor.py` | third-party skills, pinned, and the script that copies them | you, CI |
-| `install.sh` | installs this kit and the private kit for every harness | you, dotfiles |
+| `install.sh` | installs this kit and the private kit for every harness, and the kiln look (`--no-skills`, `--no-look` for one of them) | you, dotfiles (modules `look`, `skills`) |
 | `shell/auto-update.zsh` | daily background pull and reinstall | dotfiles `.zshrc` |
-| `design/` | kiln, the shared look: five themes (kiln, nightsky, Tokyo Night, Catppuccin, Gruvbox), each building Ghostty, herdr, starship, Gemini CLI, page and widget files; `kiln use <theme>` switches, `kiln import` adds any Ghostty or iTerm2 theme ([design/README.md](design/README.md)) | `install.sh` (puts `kiln` on the PATH), dotfiles, agent-stack, nowu |
+| `design/` | kiln, the shared look: five themes (kiln, nightsky, Tokyo Night, Catppuccin, Gruvbox), each building Ghostty, herdr, starship, Gemini CLI, page and widget files; `kiln use <theme>` switches, `kiln import` adds any Ghostty or iTerm2 theme ([design/README.md](design/README.md)); `design/kiln.sh` gives shell scripts the same look, and [design/STYLE.md](design/STYLE.md) is the style guide for anything you build (CLI output, installers, pickers, pages) | `install.sh` (puts `kiln` on the PATH), dotfiles, agent-stack, nowu |
 
 ## Install and update
 
 ```bash
 ~/code/agent-kit/install.sh          # this kit + my-setup/kit-private, for every harness it finds
 ~/code/agent-kit/install.sh --pull   # git pull first, then reinstall (the update path)
+~/code/agent-kit/install.sh --no-skills   # only the kiln look
 /plugin marketplace add ElRapa/agent-kit    # inside Claude Code, if you prefer plugins
 ```
 
