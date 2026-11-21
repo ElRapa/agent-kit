@@ -1,5 +1,8 @@
 # agent-kit
 
+Part of a four-repo agent setup (dotfiles, agent-stack, agent-kit, my-setup). What it all does and
+how to use it: `~/code/agent-stack/docs/features.html`; how the repos connect: `docs/setup.md` there.
+
 Skills, agents and rules I use in every project, for any harness. Plain files in open formats:
 `SKILL.md` folders ([Agent Skills](https://agentskills.io)) and `AGENTS.md`. Nothing personal and no
 employer or customer names: those live in my private `my-setup/kit-private`.
